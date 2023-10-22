@@ -253,7 +253,8 @@ public class MonopolyDealGameState extends AbstractGameState {
         int indx = getSetIndx(target,setType);
         PropertySet pSet = playerPropertySets[target].get(indx);
         playerPropertySets[target].remove(indx);
-        playerPropertySets[playerID].add(pSet);
+        for(int i=0;i<pSet.getSize();i++)
+            addProperty(playerID,pSet.get(i).cardType());
     }
     public int getSetIndx(int playerID, SetType type){
         for (PropertySet set: playerPropertySets[playerID]) {
