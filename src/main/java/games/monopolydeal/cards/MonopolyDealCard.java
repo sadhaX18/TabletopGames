@@ -3,6 +3,8 @@ package games.monopolydeal.cards;
 import core.components.Card;
 import games.monopolydeal.MonopolyDealGameState;
 
+import java.util.Objects;
+
 public class MonopolyDealCard extends Card{
     CardType type;
 
@@ -91,6 +93,11 @@ public class MonopolyDealCard extends Card{
             return other.type == type;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type, useAs);
     }
 
     public boolean isNotMulticolor() {
