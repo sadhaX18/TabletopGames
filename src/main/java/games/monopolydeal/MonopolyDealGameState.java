@@ -137,11 +137,13 @@ public class MonopolyDealGameState extends AbstractGameState {
                 retValue.playerHands[p].clear();
             }
         }
-        retValue.drawPile.shuffle(rnd);
-        // Redrawing hidden cards into hands
-        for (int p = 0; p < getNPlayers(); p++){
-            if(p != playerId && playerId!= -1){
-                retValue.drawCard(p,playerHandSize[p]);
+        if(playerId != -1) {
+            retValue.drawPile.shuffle(rnd);
+            // Redrawing hidden cards into hands
+            for (int p = 0; p < getNPlayers(); p++) {
+                if (p != playerId) {
+                    retValue.drawCard(p, playerHandSize[p]);
+                }
             }
         }
         // Completely visible values
@@ -439,7 +441,7 @@ public class MonopolyDealGameState extends AbstractGameState {
         result = 31 * result + Arrays.hashCode(playerHands);
         for(int i =0;i<getNPlayers();i++){
             for (PropertySet pSet: playerPropertySets[i]) {
-                result = result + pSet.hashCode();
+                result = result + 99 + pSet.hashCode();
             }
         }
         return result;
