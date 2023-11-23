@@ -12,25 +12,28 @@ import java.util.Objects;
  * <p>A simple action which does not execute any command but acts as an information container for other EAS.</p>
  */
 public class RentOf extends AbstractAction {
-    final PropertySet pSet;
+    final int pSetId;
+    final SetType pSetType;
     public int rent;
-    public RentOf(PropertySet pSet, int rent){
-        this.pSet = pSet;
+
+    public RentOf(int pSetId, SetType pSetType, int rent){
+        this.pSetId = pSetId;
+        this.pSetType = pSetType;
         this.rent = rent;
     }
     public RentOf(PropertySet pSet) {
-        this.pSet = pSet;
-        SetType setType = pSet.getSetType();
+        this.pSetId = pSet.getComponentID();
+        this.pSetType = pSet.getSetType();
         if(pSet.isComplete){
-            rent = setType.rent[setType.setSize-1];
+            rent = pSetType.rent[pSetType.setSize-1];
             if(pSet.hasHouse) rent = rent + 3;
             if(pSet.hasHotel) rent = rent + 4;
         } else {
-            if(pSet.getPropertySetSize()-1 >= setType.rent.length)
+            if(pSet.getPropertySetSize()-1 >= pSetType.rent.length)
                 throw new AssertionError("Another thing which should not happen");
             if(pSet.getPropertySetSize()==0)
                 rent = 0;
-            else rent = setType.rent[pSet.getPropertySetSize() - 1];
+            else rent = pSetType.rent[pSet.getPropertySetSize() - 1];
         }
     }
     @Override
@@ -39,22 +42,25 @@ public class RentOf extends AbstractAction {
     }
     @Override
     public RentOf copy() {
-        return new RentOf(pSet,rent);
+        return new RentOf(pSetId, pSetType, rent);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof RentOf)) return false;
         RentOf rentOf = (RentOf) o;
-        return rent == rentOf.rent && Objects.equals(pSet, rentOf.pSet);
+        return pSetId == rentOf.pSetId && rent == rentOf.rent && pSetType == rentOf.pSetType;
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(pSet, rent);
+        return Objects.hash(pSetId, pSetType, rent);
     }
+
     @Override
     public String toString() {
-        return pSet + " rent is " + rent;
+        return pSetType + " rent is " + rent;
     }
     @Override
     public String getString(AbstractGameState gameState) {

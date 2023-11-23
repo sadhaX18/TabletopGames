@@ -1,8 +1,8 @@
 {
-  "game": "Catan",
+  "game": "MonopolyDeal",
   "selfPlay": false,
-  "nPlayers": 4,
-  "matchups": 1000,
-  "listener": "metrics/gamemetrics.json",
+  "nPlayers": 2,
+  "matchups": 10,
+  "listener": "metrics/monopolydeal.json",
   "reportPeriod": 100
 }

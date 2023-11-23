@@ -21,7 +21,7 @@ import java.util.Objects;
  *
  * <p>It should then implement appropriate {@link #_copy()}, {@link #_equals(Object)} and {@link #hashCode()} functions.</p>
  *
- * <p>The class can optionally extend from {@link evaluation.TunableParameters} instead, which allows to use
+ * <p>The class can optionally extend from {@link TunableParameters} instead, which allows to use
  * automatic game parameter optimisation tools in the framework.</p>
  */
 public class MonopolyDealParameters extends TunableParameters {
@@ -48,8 +48,7 @@ public class MonopolyDealParameters extends TunableParameters {
     public int MULTICOLORRENT_COUNT;
     public int PROPERTYRENT_COUNT;
     Map<CardType, Integer> cardsIncludedInGame = new HashMap<>();
-    public MonopolyDealParameters(long seed) {
-        super(seed);
+    public MonopolyDealParameters() {
         addTunableParameter("HAND_SIZE", 7, Arrays.asList(3,5,7,10));
         addTunableParameter("INITIAL_DEAL", 5, Arrays.asList(3,5));
         addTunableParameter("BOARD_MODIFICATIONS_PER_TURN", 3, Arrays.asList(3,5));
@@ -151,7 +150,7 @@ public class MonopolyDealParameters extends TunableParameters {
     @Override
     protected AbstractParameters _copy() {
         // TODO: deep copy of all variables.
-        MonopolyDealParameters params = new MonopolyDealParameters(super.getRandomSeed());
+        MonopolyDealParameters params = new MonopolyDealParameters();
         params.HAND_SIZE = HAND_SIZE;
         params.DRAWS_WHEN_EMPTY = DRAWS_WHEN_EMPTY;
         params.BOARD_MODIFICATIONS_PER_TURN = BOARD_MODIFICATIONS_PER_TURN;

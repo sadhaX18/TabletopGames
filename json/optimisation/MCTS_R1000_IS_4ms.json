@@ -1,0 +1,20 @@
+{
+        "class":"players.mcts.MCTSParams",
+        "K" : 1.0,
+        "exploreEpsilon" : 0.10,
+        "rolloutLength" : 1000,
+        "maxTreeDepth" : 100,
+        "rolloutType" : "RANDOM",
+        "budgetType" : "BUDGET_TIME",
+        "selectionPolicy" : "SIMPLE",
+        "information" : "Information_Set",
+        "treePolicy" : "UCB",
+        "opponentTreePolicy" : "OneTree",
+        "budget" : 4,
+        "heuristic" : {
+                "class" : "players.heuristics.LeaderHeuristic"
+        },
+        "epsilon" : 1e-6,
+        "breakMS" : 0,
+        "maintainMasterState" : false
+}
