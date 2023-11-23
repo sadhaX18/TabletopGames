@@ -7,6 +7,8 @@ import games.GameType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * <p>The game state encapsulates all game information. It is a data-only class, with game functionality present
@@ -102,4 +104,44 @@ public class GTGameState extends AbstractGameState {
         // TODO: include the hash code of all variables
         return super.hashCode();
     }
+
+    // TODO: Consider the methods below for possible implementation
+    // TODO: These all have default implementations in AbstractGameState, so are not required to be implemented here.
+    // TODO: If the game has 'teams' that win/lose together, then implement the next two nethods.
+    /**
+     * Returns the number of teams in the game. The default is to have one team per player.
+     * If the game does not have 'teams' that win/lose together, then ignore these two methods.
+     */
+   // public int getNTeams();
+    /**
+     * Returns the team number the specified player is on.
+     */
+    //public int getTeam(int player);
+
+    // TODO: If your game has multiple special tiebreak options, then implement the next two methods.
+    // TODO: The default is to tie-break on the game score (if this is the case, ignore these)
+    // public double getTiebreak(int playerId, int tier);
+    // public int getTiebreakLevels();
+
+
+    // TODO: If your game does not have a score of any type, and is an 'insta-win' type game which ends
+    // TODO: as soon as a player achieves a winning condition, and has some bespoke method for determining 1st, 2nd, 3rd etc.
+    // TODO: Then you *may* want to implement:.
+    //public int getOrdinalPosition(int playerId);
+
+    // TODO: Review the methods below...these are all supported by the default implementation in AbstractGameState
+    // TODO: So you do not (and generally should not) implement your own versions - take advantage of the framework!
+    // public Random getRnd() returns a Random number generator for the game. This will be derived from the seed
+    // in game parameters, and will be updated correctly on a reset
+
+    // Ths following provide access to the id of the current player; the first player in the Round (if that is relevant to a game)
+    // and the current Turn and Round numbers.
+    // public int getCurrentPlayer()
+    // public int getFirstPlayer()
+    // public int getRoundCounter()
+    // public int getTurnCounter()
+    // also make sure you check out the standard endPlayerTurn() and endRound() methods in StandardForwardModel
+
+    // This method can be used to log a game event (e.g. for something game-specific that you want to include in the metrics)
+    // public void logEvent(IGameEvent...)
 }

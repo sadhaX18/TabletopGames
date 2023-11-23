@@ -37,10 +37,9 @@ public class CatanForwardModel extends StandardForwardModel {
         CatanGameState state = (CatanGameState) firstState;
         CatanParameters params = (CatanParameters) state.getGameParameters();
         firstState.getCoreGameParameters().setMaxRounds(params.maxRounds);
-        state.rnd = new Random(params.getRandomSeed());
 
-        state.setBoard(generateBoard(params));
-        state.setGraph(extractGraphFromBoard(state.getBoard(), params));
+        state.setBoard(generateBoard(params, state.getRnd()));
+        state.setGraph(extractGraphFromBoard(state.getBoard(), params, state.getRnd()));
 
         state.scores = new int[state.getNPlayers()];
         state.victoryPoints = new int[state.getNPlayers()];
@@ -97,7 +96,7 @@ public class CatanForwardModel extends StandardForwardModel {
                 state.devCards.add(card);
             }
         }
-        state.devCards.shuffle(state.rnd);
+        state.devCards.shuffle(state.getRnd());
         state.setGamePhase(Setup);
     }
 
@@ -114,7 +113,7 @@ public class CatanForwardModel extends StandardForwardModel {
                 if (gs.getTurnCounter() > 0 && gs.getTurnCounter() % (gs.getNPlayers()-1) == 0) {
                     endRound(gs, gs.getCurrentPlayer());
                 } else {
-                    endPlayerTurn(gs);
+                    endCatanPlayerTurn(gs);
                 }
             } else {
                 if (gs.getTurnCounter() > 0 && gs.getTurnCounter() % (gs.getNPlayers()-1) == 0) {
@@ -148,7 +147,7 @@ public class CatanForwardModel extends StandardForwardModel {
                 if (gs.getTurnCounter() > 0 && gs.getTurnCounter() % (gs.getNPlayers()-1) == 0) {
                     endRound(gs, 0);
                 } else {
-                    endPlayerTurn(gs);
+                    endCatanPlayerTurn(gs);
                 }
                 rollDiceAndAllocateResources(gs, params);
             } else if (gs.tradeOffer != null) {
@@ -178,10 +177,9 @@ public class CatanForwardModel extends StandardForwardModel {
         }
     }
 
-    @Override
-    public void endPlayerTurn(AbstractGameState gs) {
+    public void endCatanPlayerTurn(CatanGameState gs) {
         super.endPlayerTurn(gs);
-        ((CatanGameState)gs).nTradesThisTurn = 0;
+        gs.nTradesThisTurn = 0;
     }
 
     private void rollDiceAndAllocateResources(CatanGameState gs, CatanParameters cp) {
@@ -192,7 +190,7 @@ public class CatanForwardModel extends StandardForwardModel {
         int nDice = cp.nDice;
         int rollValue = 0;
         for (int i = 0; i < nDice; i++) {
-            rollValue += gs.rnd.nextInt(n) + 1;
+            rollValue += gs.getRnd().nextInt(n) + 1;
         }
         gs.setRollValue(rollValue);
 
@@ -287,7 +285,7 @@ public class CatanForwardModel extends StandardForwardModel {
         return mainActions;
     }
 
-    private CatanTile[][] generateBoard(CatanParameters params) {
+    private CatanTile[][] generateBoard(CatanParameters params, Random rnd) {
         // Shuffle the tile types
         ArrayList<CatanTile.TileType> tileList = new ArrayList<>();
         for (Map.Entry<CatanTile.TileType, Integer> tileCount : params.tileCounts.entrySet()) {
@@ -303,8 +301,8 @@ public class CatanForwardModel extends StandardForwardModel {
             }
         }
         // shuffle collections, so we get randomized tiles and tokens on them
-        Collections.shuffle(tileList);
-        Collections.shuffle(numberList);
+        Collections.shuffle(tileList, rnd);
+        Collections.shuffle(numberList, rnd);
 
         CatanTile[][] board = new CatanTile[params.n_tiles_per_row][params.n_tiles_per_row];
         int midX = board.length / 2;
@@ -334,7 +332,7 @@ public class CatanForwardModel extends StandardForwardModel {
         return board;
     }
 
-    private GraphBoardWithEdges extractGraphFromBoard(CatanTile[][] board, CatanParameters cp) {
+    private GraphBoardWithEdges extractGraphFromBoard(CatanTile[][] board, CatanParameters cp, Random rnd) {
         GraphBoardWithEdges graph = new GraphBoardWithEdges();
 
         // Create vertices and add references in tiles
@@ -388,19 +386,19 @@ public class CatanForwardModel extends StandardForwardModel {
         }
 
         // Finally set Harbors types
-        setHarbors(board, graph, cp);
+        setHarbors(board, graph, cp, rnd);
 
         return graph;
     }
 
-    private void setHarbors(CatanTile[][] board, GraphBoardWithEdges graphBoard, CatanParameters cp) {
+    private void setHarbors(CatanTile[][] board, GraphBoardWithEdges graphBoard, CatanParameters cp, Random rnd) {
         // set harbors along the tiles where the SEA borders the land
         ArrayList<CatanParameters.Resource> harbors = new ArrayList<>();
         for (Map.Entry<CatanParameters.Resource, Integer> entry : cp.harborCount.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++)
                 harbors.add(entry.getKey());
         }
-        Collections.shuffle(harbors);
+        Collections.shuffle(harbors, rnd);
 
         int radius = board.length / 2;
         // todo edge 4 can work, but random would be better, the math changes with different directions.

@@ -4,7 +4,7 @@ import core.AbstractPlayer;
 import evaluation.optimisation.TunableParameters;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import players.mcts.BasicMCTSPlayer;
+import players.basicMCTS.BasicMCTSPlayer;
 import players.rhea.RHEAParams;
 import players.rhea.RHEAPlayer;
 import players.rmhc.RMHCParams;
@@ -12,7 +12,6 @@ import players.rmhc.RMHCPlayer;
 import players.simple.OSLAPlayer;
 import players.simple.RandomPlayer;
 import utilities.JSONUtils;
-import utilities.Utils;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -125,9 +124,9 @@ public class PlayerFactory {
 //                return new MCTSPlayer(new MCTSParams(System.currentTimeMillis()));
                 return new BasicMCTSPlayer();
             case "rmhc":
-                return new RMHCPlayer(new RMHCParams(System.currentTimeMillis()));
+                return new RMHCPlayer(new RMHCParams());
             case "rhea":
-                return new RHEAPlayer(new RHEAParams(System.currentTimeMillis()));
+                return new RHEAPlayer(new RHEAParams());
             default:
                 throw new AssertionError("Unknown file or player key : " + input);
         }

@@ -1,7 +1,6 @@
 package evaluation;
 
 import org.json.simple.JSONObject;
-import scala.concurrent.impl.FutureConvertersImpl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,6 +22,10 @@ public enum RunArg {
             "\t This may be useful if you want to use the same destDir for multiple experiments.",
             false,
             new Usage[]{Usage.RunGames}),
+    byTeam("If true (the default) and the game supports teams, then one player type will be assigned to all players on a team.\n" +
+            "\t If false, then each player will be assigned a player type independently.",
+            true,
+            new Usage[]{Usage.RunGames, Usage.ParameterSearch}),
     config("The location of a JSON file from which to read the configuration. \n" +
             "\t If this is specified, then all other arguments are ignored.",
             "",
@@ -33,7 +36,7 @@ public enum RunArg {
             "metrics" + File.separator + "out",
             new Usage[]{Usage.RunGames, Usage.ParameterSearch}),
     evalGames("The number of games to run with the best predicted setting to estimate its true value (default is 20% of NTBEA iterations)",
-            0,
+            -1,
             new Usage[]{Usage.ParameterSearch}),
     evalMethod("Score|Ordinal|Heuristic|Win specifies what we are optimising (if not tuneGame). Defaults to Win.\n" +
             "\tIf tuneGame, then instead the name of a IGameHeuristic class in the evaluation.heuristics package\n" +
@@ -73,22 +76,22 @@ public enum RunArg {
     matchups("The total number of matchups to run in a tournament if mode=random...\n" +
             "\t...or the number of matchups to run per combination of players if mode=exhaustive\n" +
             "\tfor NTBEA this will be used as a final tournament between the recommended agents from each run.",
-            0,
+            1,
             new Usage[]{Usage.RunGames, Usage.ParameterSearch}),
     metrics("(Optional) The full class name of an IMetricsCollection implementation. " +
             "\t The recommended usage is to include these in the JSON file that defines the listener,\n" +
             "\t but this option is here for quick and dirty tests.",
             "evaluation.metrics.GameMetrics",
             new Usage[]{Usage.RunGames}),
-    mode("exhaustive|random|sequential - defaults to exhaustive.\n" +
+    mode("exhaustive|random|sequential - defaults to random.\n" +
             "\t 'exhaustive' will iterate exhaustively through every possible permutation: \n" +
             "\t every possible player in every possible position, and run a number of games equal to 'matchups'\n" +
             "\t for each. This can be excessive for a large number of players." +
             "\t 'random' will have a random matchup, while ensuring no duplicates, and that all players get the\n" +
             "\t the same number of games in total.\n" +
             "\t 'sequential' will run tournament on a ONE_VS_ALL basis between each pair of agents.\n" +
-            "\t If a focusPlayer is provided, then this is ignored.",
-            "exhaustive",
+            "\t If a focusPlayer is provided, then 'mode' is ignored.",
+            "random",
             new Usage[]{Usage.RunGames}),
     nPlayers("The number of players in each game. Overrides playerRange.",
             -1,
@@ -110,7 +113,8 @@ public enum RunArg {
     playerRange("The total number of players in each game (the default is 'all') \n " +
             "\t A range can also be specified, for example 3-5. \n " +
             "\t Different player counts can be specified for each game in pipe-delimited format.\n" +
-            "\t If 'all' is specified, then every possible playerCount for the game will be analysed.",
+            "\t If 'all' is specified, then every possible playerCount for the game will be analysed.\n" +
+            "\t Exception: if no player directory is set, then maximum number of players per game will be 5.",
             "all",
             new Usage[]{Usage.RunGames}),
     randomGameParams("(Optional) If specified, parameters for the game will be randomized for each game, and printed before the run.",
@@ -122,6 +126,10 @@ public enum RunArg {
     reportPeriod("(Optional) For random mode execution only, after how many games played results are reported.\n" +
             "\t Defaults to the end of the tournament (-1)",
             -1,
+            new Usage[]{Usage.RunGames}),
+    distinctRandomSeeds("If non-zero, then this defines the number of distinct random seeds to use for each game.\n" +
+            "\t For tournament will be run for each individual random seed individually, using the other specified parameters.",
+            0,
             new Usage[]{Usage.RunGames}),
     searchSpace("The json-format file of the search space to use. No default.",
             "",

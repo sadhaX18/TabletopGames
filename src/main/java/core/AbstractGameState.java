@@ -46,6 +46,7 @@ public abstract class AbstractGameState {
     // Migrated from TurnOrder...may move later
     protected int roundCounter, turnCounter, turnOwner, firstPlayer;
     protected int nPlayers;
+    protected int nTeams;
     protected List<IGameListener> listeners = new ArrayList<>();
 
     // Timers for all players
@@ -64,12 +65,15 @@ public abstract class AbstractGameState {
     protected Stack<IExtendedSequence> actionsInProgress = new Stack<>();
     CoreParameters coreGameParameters;
     private int gameID;
+    protected Random rnd;
 
     /**
      * @param gameParameters - game parameters.
      */
     public AbstractGameState(AbstractParameters gameParameters, int nPlayers) {
         this.nPlayers = nPlayers;
+        this.nTeams = nPlayers;  // we always default the number of teams to the number of players
+        // this is then overridden in the game-specific constructor if needed
         this.gameParameters = gameParameters;
         this.coreGameParameters = new CoreParameters();
     }
@@ -93,6 +97,7 @@ public abstract class AbstractGameState {
         roundCounter = 0;
         firstPlayer = 0;
         actionsInProgress.clear();
+        rnd = new Random(gameParameters.randomSeed);
     }
 
     /**
@@ -114,6 +119,13 @@ public abstract class AbstractGameState {
         return this.gameParameters;
     }
     public int getNPlayers() { return nPlayers; }
+    public int getNTeams() { return nTeams; }
+    /**
+     * Returns the team number the specified player is on.
+     * This defaults to one team per player and should be overridden
+     * in child classes if relevant to the game
+     */
+    public int getTeam(int player) { return player;}
     public int getCurrentPlayer() {
         return isActionInProgress() ? actionsInProgress.peek().getCurrentPlayer(this) : turnOwner;
     }
@@ -188,6 +200,9 @@ public abstract class AbstractGameState {
         turnOwner = newFirstPlayer;
     }
 
+    public Random getRnd() {
+        return rnd;
+    }
     public void addListener(IGameListener listener) {
         if (!listeners.contains(listener))
             listeners.add(listener);
@@ -222,7 +237,6 @@ public abstract class AbstractGameState {
         addAllComponents(); // otherwise the list of allComponents is only ever updated when we copy the state!
         return allComponents;
     }
-    public double[] getFeatureVector() {return null;} //Gets a feature vector for games that have it, otherwise returns null
 
     /**
      * While getAllComponents() returns an Area containing every component, this method
@@ -275,6 +289,7 @@ public abstract class AbstractGameState {
         s.turnCounter = turnCounter;
         s.turnOwner = turnOwner;
         s.firstPlayer = firstPlayer;
+        s.rnd = rnd;
 
         if (!coreGameParameters.competitionMode) {
             s.history = new ArrayList<>(history);

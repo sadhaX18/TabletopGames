@@ -11,11 +11,8 @@ import java.util.*;
 
 
 public class RMHCPlayer extends AbstractPlayer {
-
-    RMHCParams params;
     private Individual bestIndividual;
     private final Random randomGenerator;
-    IStateHeuristic heuristic;
 
     // Budgets
     private double avgTimeTaken = 0, acumTimeTaken = 0;
@@ -24,33 +21,21 @@ public class RMHCPlayer extends AbstractPlayer {
     private int copyCalls = 0;
 
     public RMHCPlayer() {
-        this(System.currentTimeMillis());
+        long seed = System.currentTimeMillis();
+        randomGenerator = new Random(seed);
+        parameters = new RMHCParams();
+        parameters.setRandomSeed(seed);
     }
 
     public RMHCPlayer(RMHCParams params) {
         randomGenerator = new Random(params.getRandomSeed());
-        this.params = params;
-        heuristic = params.gameHeuristic;
+        parameters = params;
         setName("RMHC");
     }
 
-    public RMHCPlayer(long seed) {
-        this(new RMHCParams(seed));
-    }
-
-    public RMHCPlayer(IStateHeuristic heuristic) {
-        this(System.currentTimeMillis());
-        this.heuristic = heuristic;
-    }
-
-    public RMHCPlayer(RMHCParams params, IStateHeuristic heuristic) {
-        this(params);
-        this.heuristic = heuristic;
-    }
-
-    public RMHCPlayer(long seed, IStateHeuristic heuristic) {
-        this(new RMHCParams(seed));
-        this.heuristic = heuristic;
+    @Override
+    public RMHCParams getParameters() {
+        return (RMHCParams) parameters;
     }
 
     @Override
@@ -61,9 +46,10 @@ public class RMHCPlayer extends AbstractPlayer {
         numIters = 0;
         fmCalls = 0;
         copyCalls = 0;
+        RMHCParams params = getParameters();
 
         // Initialise individual
-        bestIndividual = new Individual(params.horizon, params.discountFactor, getForwardModel(), stateObs, getPlayerID(), randomGenerator, heuristic);
+        bestIndividual = new Individual(params.horizon, params.discountFactor, getForwardModel(), stateObs, getPlayerID(), randomGenerator, params.getHeuristic());
         fmCalls += bestIndividual.length;
 
         // Run evolution
@@ -92,7 +78,7 @@ public class RMHCPlayer extends AbstractPlayer {
 
     @Override
     public RMHCPlayer copy() {
-        RMHCParams newParams = (RMHCParams) params.copy();
+        RMHCParams newParams = (RMHCParams) parameters.copy();
         newParams.setRandomSeed(randomGenerator.nextInt());
         return new RMHCPlayer(newParams);
     }
