@@ -3,6 +3,8 @@ package games.monopolydeal.cards;
 import core.CoreConstants;
 import core.components.Deck;
 
+import java.util.Objects;
+
 import static core.CoreConstants.VisibilityMode.VISIBLE_TO_ALL;
 
 public class PropertySet extends Deck<MonopolyDealCard> {
@@ -20,30 +22,44 @@ public class PropertySet extends Deck<MonopolyDealCard> {
         hasHotel = false;
         hasWild = false;
     }
-    // Copy constructor???
+
+    private PropertySet(String name, CoreConstants.VisibilityMode visibility, SetType type, int ownerId, int id) {
+        super(name, ownerId, id, visibility);
+        this.type = type;
+        isComplete = false;
+        hasHouse = false;
+        hasHotel = false;
+        hasWild = false;
+    }
+    @Override
     public PropertySet copy(){
         Deck<MonopolyDealCard> cardDeck = super.copy();
         SetType sType = getSetType();
-        PropertySet newSet = new PropertySet(sType.toString(),VISIBLE_TO_ALL,sType);
-        for (int i=0; i<cardDeck.getSize();i++) {
-            newSet.add(cardDeck.get(i));
-        }
+        PropertySet newSet = new PropertySet(sType.toString(),VISIBLE_TO_ALL,sType, ownerId, componentID);
+        copyTo(newSet);
+//        for (int i=0; i<cardDeck.getSize();i++) {
+//            newSet.add(cardDeck.get(i));
+//        }
         newSet.isComplete = isComplete;
         newSet.hasWild = hasWild;
         newSet.hasHouse = hasHouse;
         newSet.hasHotel = hasHotel;
         return newSet;
     }
+    public int getPropertySetSize(){
+        int count = 0;
+        for (int i=0; i<this.getSize();i++) {
+            if(this.get(i).isPropertyCard()) count = count+1;
+        }
+        return count;
+    }
     public SetType getSetType(){return type;}
     public boolean getIsComplete(){return isComplete;}
-    // Note to self
-    // Add house/hotel only if complete set
-    // modify properties only if no house/hotel present
     @Override
     public boolean add(MonopolyDealCard c) {
         if(c.type == CardType.House ) hasHouse = true;
         else if (c.type == CardType.Hotel ) hasHotel = true;
-        else if(getSize() >= getSetType().setSize - 1)
+        else if(getPropertySetSize() >= getSetType().setSize - 1)
             isComplete = true;
         if(c.isPropertyWildCard())hasWild = true;
         return super.add(c);
@@ -52,7 +68,7 @@ public class PropertySet extends Deck<MonopolyDealCard> {
     public boolean remove(MonopolyDealCard c) {
         if(c.type == CardType.House ) hasHouse = false;
         else if (c.type == CardType.Hotel ) hasHotel = false;
-        if(c.isPropertyCard() && getSize() <= getSetType().setSize-1) isComplete = false;
+        if(c.isPropertyCard() && getPropertySetSize() <= getSetType().setSize-1) isComplete = false;
         if(c.isPropertyWildCard()){
             int wildCount = 0;
             for (MonopolyDealCard dealCard: this.components) {
@@ -61,6 +77,20 @@ public class PropertySet extends Deck<MonopolyDealCard> {
             if(wildCount==1)hasWild = false;
         }
         return super.remove(c);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PropertySet that = (PropertySet) o;
+        return isComplete == that.isComplete && hasWild == that.hasWild && hasHouse == that.hasHouse && hasHotel == that.hasHotel && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type, isComplete, hasWild, hasHouse, hasHotel);
     }
 
     @Override

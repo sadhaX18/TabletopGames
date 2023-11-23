@@ -5,12 +5,13 @@ import core.StandardForwardModel;
 import core.actions.AbstractAction;
 import core.components.Deck;
 import games.monopolydeal.actions.*;
+import games.monopolydeal.actions.actioncards.PlayActionCard;
+import games.monopolydeal.actions.boardmanagement.AddToBoard;
+import games.monopolydeal.actions.boardmanagement.ModifyBoard;
 import games.monopolydeal.cards.CardType;
 import games.monopolydeal.cards.MonopolyDealCard;
 
 import java.util.*;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * <p>The forward model contains all the game rules and logic. It is mainly responsible for declaring rules for:</p>
@@ -22,18 +23,6 @@ import static java.util.stream.Collectors.toList;
  * </ol>
  */
 public class MonopolyDealForwardModel extends StandardForwardModel {
-
-    /**
-     * Initializes all variables in the given game state. Performs initial game setup according to game rules, e.g.:
-     * <ul>
-     *     <li>Sets up decks of cards and shuffles them</li>
-     *     <li>Gives player cards</li>
-     *     <li>Places tokens on boards</li>
-     *     <li>...</li>
-     * </ul>
-     *
-     * @param firstState - the state to be modified to the initial game state.
-     */
     @Override
     protected void _setup(AbstractGameState firstState) {
         // initialization of variables and game setup
@@ -60,11 +49,6 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
         // Draw cards at the start of the turn
         state.drawCard(state.getFirstPlayer(),params.DRAWS_PER_TURN);
     }
-
-    /**
-     * Calculates the list of currently available actions, possibly depending on the game phase.
-     * @return - List of AbstractAction objects.
-     */
     @Override
     protected List<AbstractAction> _computeAvailableActions(AbstractGameState gameState) {
         MonopolyDealGameState state = (MonopolyDealGameState) gameState;
@@ -77,7 +61,8 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
                     if(state.checkForActionCards(playerID))
                         availableActions.add(new PlayActionCard(playerID));
 
-                    availableActions.add(new AddToBoard(playerID));
+                    if(state.getPlayerHand(playerID).getSize()>0)
+                        availableActions.add(new AddToBoard(playerID));
 
                     if(state.canModifyBoard(playerID))
                         availableActions.add(new ModifyBoard(playerID));
@@ -96,26 +81,11 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
                     }
                     return availableActions;
                 }
+                else throw new AssertionError("Already discarded required no of cards. Should not happen");
             default:
                 throw new AssertionError("Unknown Game Phase " + state.getGamePhase());
         }
     }
-
-    // Draw cards at start of turn
-//    @Override
-//    protected void _beforeAction(AbstractGameState currentState, AbstractAction actionChosen) {
-//        MonopolyDealGameState state = (MonopolyDealGameState) currentState;
-//        if(state.turnStart){
-//            int currentPlayer = state.getCurrentPlayer();
-//            if(state.playerHands[currentPlayer].getSize() == 0){
-//                state.drawCard(currentPlayer,state.params.DRAWS_WHEN_EMPTY);
-//            }
-//            else{
-//                state.drawCard(currentPlayer,state.params.DRAWS_PER_TURN);
-//            }
-//            state.turnStart = false;
-//        }
-//    }
     @Override
     protected void _afterAction(AbstractGameState currentState, AbstractAction actionTaken) {
         MonopolyDealGameState state = (MonopolyDealGameState) currentState;

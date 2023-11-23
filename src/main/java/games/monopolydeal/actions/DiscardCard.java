@@ -26,8 +26,7 @@ public class DiscardCard extends AbstractAction {
                 .filter(card -> card.cardType() == this.type).findFirst();
 
         if (cardToDiscard.isPresent()) {
-            MonopolyDealCard card = cardToDiscard.get();
-            state.discardCard(card, player);
+            state.discardCard(type, player);
         } else {
             System.out.println(ags);
             throw new AssertionError("Cannot discard card that is not in hand : " + this);
@@ -44,7 +43,7 @@ public class DiscardCard extends AbstractAction {
      */
     @Override
     public AbstractAction copy() {
-        return this;
+        return new DiscardCard(type, player);
         // no state
     }
 

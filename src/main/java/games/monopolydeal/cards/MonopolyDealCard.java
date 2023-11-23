@@ -3,64 +3,22 @@ package games.monopolydeal.cards;
 import core.components.Card;
 import games.monopolydeal.MonopolyDealGameState;
 
+import java.util.Objects;
+
 public class MonopolyDealCard extends Card{
     CardType type;
 
     SetType useAs; // Used by property wild;
 
-    protected MonopolyDealCard(CardType type) {
+    public MonopolyDealCard(CardType type) {
         super(type.name());
         this.type = type;
-        this.useAs = getSetType(type);
-        if(type.isPropertyWild){
-            //Modify use as;
-        }
+        this.useAs = type.getSetType();
     }
-    public SetType getSetType(CardType type){
-        SetType sType;
-        switch (type){
-            case BrownProperty:
-            case BrownLightBlueWild:
-                sType = SetType.Brown;
-                break;
-            case BlueProperty:
-                sType = SetType.Blue;
-                break;
-            case GreenProperty:
-            case GreenBlueWild:
-                sType = SetType.Green;
-                break;
-            case LightBlueProperty:
-                sType = SetType.LightBlue;
-                break;
-            case OrangeProperty:
-                sType = SetType.Orange;
-                break;
-            case PinkProperty:
-            case PinkOrangeWild:
-                sType = SetType.Pink;
-                break;
-            case RailRoadProperty:
-            case RailRoadGreenWild:
-            case RailRoadLightBlueWild:
-            case RailRoadUtilityWild:
-                sType = SetType.RailRoad;
-                break;
-            case RedProperty:
-                sType = SetType.Red;
-                break;
-            case UtilityProperty:
-                sType = SetType.Utility;
-                break;
-            case YellowProperty:
-            case RedYellowWild:
-                sType = SetType.Yellow;
-                break;
-            default:
-                sType = SetType.UNDEFINED;
-                break;
-        }
-        return sType;
+    private MonopolyDealCard(CardType type, int id) {
+        super(type.name(), id);
+        this.type = type;
+        this.useAs = type.getSetType();
     }
     public static MonopolyDealCard create(CardType type) {
         switch (type) {
@@ -119,19 +77,28 @@ public class MonopolyDealCard extends Card{
     public void setUseAs(SetType sType) {  useAs = sType;}
     public CardType cardType() { return type; }
     public boolean isDoubleTheRent(){ return type == CardType.DoubleTheRent; }
-    public boolean isJustSayNo(){ return type == CardType.JustSayNo; }
-
     @Override
     public MonopolyDealCard copy() {
-        // Currently all cardTypes are immutable - so we can save resources when copying
-        return this;
+        // Only property cards need to keep reference of their useAs other cards are immutable
+        if(!(isPropertyCard()))
+            return this;
+        else {
+            MonopolyDealCard cardCopy = new MonopolyDealCard(this.cardType(), componentID);
+            cardCopy.useAs = this.useAs;
+            return cardCopy;
+        }
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(super.hashCode(), type, useAs);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof MonopolyDealCard) {
             MonopolyDealCard other = (MonopolyDealCard) obj;
-            return other.type == type && other.useAs == useAs;
+            return other.type == type;
         }
         return false;
     }

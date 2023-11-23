@@ -5,6 +5,7 @@
       {"class": "evaluation.metrics.GameMetrics$GameScore" },
       {"class": "evaluation.metrics.GameMetrics$Winner" },
       {"class": "evaluation.metrics.GameMetrics$GameDuration" },
-      {"class": "evaluation.metrics.GameMetrics$Actions" }
+      {"class": "evaluation.metrics.GameMetrics$Actions" },
+	  {"class": "evaluation.metrics.GameMetrics$Decisions" }
     ]]
 }

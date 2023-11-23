@@ -199,7 +199,7 @@ public class MonopolyDealGUIManager extends AbstractGUIManager {
             playerHands[i].update(mdgs);
             playerHands[i].playerHandView.setFront(false);
             playerBanks[i].updateComponent(mdgs.getPlayerBank(i));
-            for(int j=0;j < mdgs.getPropertySets(i).size(); j++){
+            for(int j=0; j < 10; j++){
                 playerProperties[i][j].updateProperty(mdgs,i,j);
             }
             if (i == gameState.getCurrentPlayer() && (gameState.getCoreGameParameters().alwaysDisplayCurrentPlayer

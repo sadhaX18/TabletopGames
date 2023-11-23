@@ -15,6 +15,9 @@ import org.json.simple.parser.ParseException;
 import players.PlayerFactory;
 import players.PlayerType;
 import players.basicMCTS.BasicMCTSPlayer;
+import players.mcts.BasicMCTSPlayer;
+import players.mcts.MCTSEnums;
+import players.mcts.MCTSParams;
 import players.mcts.MCTSPlayer;
 import players.rmhc.RMHCPlayer;
 import players.simple.OSLAPlayer;
@@ -89,6 +92,12 @@ public class RunGames implements IGameRunner {
 //            agents.add(new BasicMCTSPlayer());
             agents.add(new RandomPlayer());
             agents.add(new RMHCPlayer());
+//            MCTSParams params = new MCTSParams();
+//            params.maxTreeDepth = 10;
+//            params.rolloutTermination = MCTSEnums.RolloutTermination.END_TURN;
+//            agents.add(new MCTSPlayer(params));
+//            agents.add(new OSLAPlayer());
+//            agents.add(new OSLAPlayer());
             agents.add(new OSLAPlayer());
         }
         runGames.agents = agents;
