@@ -148,7 +148,7 @@ public enum RunArg {
             "\t If 'all' is specified, then every possible playerCount for the game will be analysed.\n" +
             "\t Exception: if no player directory is set, then maximum number of players per game will be 5.",
             "all",
-            new Usage[]{Usage.RunGames}),
+            new Usage[]{Usage.RunGames, Usage.SkillLadder}),
     randomGameParams("(Optional) If specified, parameters for the game will be randomized for each game, and printed before the run.",
             false,
             new Usage[]{Usage.RunGames}),

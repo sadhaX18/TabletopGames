@@ -1,13 +1,13 @@
 {
   "game": "MonopolyDeal",
-  "nPlayers": 2,
+  "playerRange": "all",
   "matchups": 100,
   "listener": "json/optimisation/GameResultMetrics.json",
   "player": "json/optimisation/MCTS_R1000_IS_4ms.json",
   "startBudget": 4,
   "multiplier": 2,
   "iterations": 8,
-  "destDir": "monopolydeal_2P",
+  "destDir": "monopolydeal",
   "searchSpace": "json/optimisation/MCTSBaseSearch.json",
   "NTBEABudget": 500,
   "startSettings": ""
