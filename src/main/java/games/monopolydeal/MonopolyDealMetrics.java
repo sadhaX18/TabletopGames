@@ -85,6 +85,11 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                 records.put("PropertyRentUsed", Arrays.stream(counters[6]).sum());
                 records.put("DealBreakerUsed", Arrays.stream(counters[7]).sum());
                 records.put("JustSayNoUsed", Arrays.stream(counters[8]).sum());
+
+                for(int i=0;i<9;i++)
+                    for(int j=0;j<5;j++)
+                        counters[i][j]=0;
+
                 return true;
             }
             return false;

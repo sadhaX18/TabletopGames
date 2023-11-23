@@ -87,10 +87,10 @@ public class RunGames implements IGameRunner {
         if (!runGames.config.get(playerDirectory).equals("")) {
             agents.addAll(PlayerFactory.createPlayers((String) runGames.config.get(playerDirectory)));
         } else {
-//            agents.add(new MCTSPlayer());
+            agents.add(new MCTSPlayer());
 //            agents.add(new BasicMCTSPlayer());
             agents.add(new RandomPlayer());
-//            agents.add(new RMHCPlayer());
+            agents.add(new RMHCPlayer());
 //            MCTSParams params = new MCTSParams();
 //            params.maxTreeDepth = 10;
 //            params.rolloutTermination = MCTSEnums.RolloutTermination.END_TURN;
