@@ -3,6 +3,7 @@ package games.monopolydeal;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Deck;
+import core.interfaces.IGamePhase;
 import core.interfaces.IStateHeuristic;
 import evaluation.optimisation.TunableParameters;
 import games.monopolydeal.cards.CardType;
@@ -13,6 +14,11 @@ import games.monopolydeal.cards.SetType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
+
+import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYONLY;
+import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYBANK;
+import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYHAND;
+import static games.monopolydeal.MonopolyDealHeuristicType.ALL;
 
 public class MonopolyDealHeuristic extends TunableParameters implements IStateHeuristic {
 
@@ -48,6 +54,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
     int HAND_PROPERTYRENT = 2;
     int HAND_MULTICOLORWILD = 4;
 
+    MonopolyDealHeuristicType HEURISTIC_TYPE = ALL;
 
 
     public MonopolyDealHeuristic(){
@@ -77,6 +84,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         addTunableParameter("HAND_PROPERTYRENT", 2, Arrays.asList(1,2,3));
         addTunableParameter("COMPLETESET_VALUE", 5, Arrays.asList(3,5,7));
         addTunableParameter("HAND_MULTICOLORWILD", 4, Arrays.asList(3,4,5));
+        addTunableParameter("HEURISTIC_TYPE",PROPERTYONLY,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,ALL));
         insertValues();
     }
     @Override
@@ -107,6 +115,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         HAND_PROPERTYRENT = (int) getParameterValue("HAND_PROPERTYRENT");
         COMPLETESET_VALUE = (int) getParameterValue("COMPLETESET_VALUE");
         HAND_MULTICOLORWILD = (int) getParameterValue("HAND_MULTICOLORWILD");
+        HEURISTIC_TYPE = (MonopolyDealHeuristicType) getParameterValue("HEURISTIC_TYPE");
     }
     HashMap<CardType,Integer> cardValue = new HashMap<>();
     HashMap<SetType, Integer> setValue = new HashMap<>();
@@ -124,19 +133,45 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         return ((scores[playerId]-minScore)/(maxScore-minScore)*2.0)-1;
     }
     double playerHeuristicScore(MonopolyDealGameState MDGS, int playerID){
-        Deck<MonopolyDealCard> playerBank = MDGS.getPlayerBank(playerID);
-        PropertySet[] propertySets = MDGS.getPropertySets(playerID);
-        Deck<MonopolyDealCard> playerHand = MDGS.getPlayerHand(playerID);
+        switch (HEURISTIC_TYPE){
+            case PROPERTYONLY:
+                return getPropertyValue(MDGS, playerID);
+            case PROPERTYBANK:
+                return getBankValue(MDGS, playerID) + getPropertyValue(MDGS, playerID);
+            case PROPERTYHAND:
+                return getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID);
+            case BASICALL:
+                return getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID) + getBankValue(MDGS, playerID);
+            case ALL:
+                return getBankValue(MDGS, playerID)/(Math.sqrt((MDGS.getRoundCounter()+1)*1.0))
+                        + getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID);
+            default:
+                throw new AssertionError("Not yet implemented");
+        }
+    }
 
-        // split value for Sets and bank
-        int propertyValue = 0, bankValue = 0, pHandValue = 0;
-        for(int i=0;i<playerBank.getSize();i++)
-            bankValue = bankValue + cardValue.get(playerBank.get(i).cardType());
+    private int getPropertyValue(MonopolyDealGameState MDGS, int playerID){
+        PropertySet[] propertySets = MDGS.getPropertySets(playerID);
+        int propertyValue = 0;
         for (PropertySet pSet: propertySets) {
             if(pSet.isComplete)
                 propertyValue = propertyValue + COMPLETESET_VALUE;
             propertyValue = propertyValue + (setValue.get(pSet.getSetType()) * pSet.getSize());
         }
+        return propertyValue;
+    }
+
+    private int getBankValue(MonopolyDealGameState MDGS, int playerID){
+        Deck<MonopolyDealCard> playerBank = MDGS.getPlayerBank(playerID);
+        int bankValue = 0;
+        for(int i=0;i<playerBank.getSize();i++)
+            bankValue = bankValue + cardValue.get(playerBank.get(i).cardType());
+        return bankValue;
+    }
+
+    private int getPlayerHandValue(MonopolyDealGameState MDGS, int playerID){
+        Deck<MonopolyDealCard> playerHand = MDGS.getPlayerHand(playerID);
+        int pHandValue = 0;
         for(int i=0; i<playerHand.getSize(); i++){
             switch (playerHand.get(i).cardType()){
                 case MulticolorWild:
@@ -175,8 +210,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
 
             }
         }
-        return bankValue/(Math.sqrt((MDGS.getRoundCounter()+1)*1.0))
-                + propertyValue + pHandValue;
+        return pHandValue;
     }
     private void insertValues(){
         // Money values
@@ -258,6 +292,8 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         heuristic.COMPLETESET_VALUE = COMPLETESET_VALUE;
         heuristic.HAND_MULTICOLORWILD = HAND_MULTICOLORWILD;
 
+        heuristic.HEURISTIC_TYPE = HEURISTIC_TYPE;
+
         return heuristic;
     }
 
@@ -267,16 +303,17 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MonopolyDealHeuristic heuristic = (MonopolyDealHeuristic) o;
-        return BANK_VALUE_1 == heuristic.BANK_VALUE_1 && BANK_VALUE_2 == heuristic.BANK_VALUE_2 && BANK_VALUE_3 == heuristic.BANK_VALUE_3 && BANK_VALUE_4 == heuristic.BANK_VALUE_4 && BANK_VALUE_5 == heuristic.BANK_VALUE_5 && BANK_VALUE_10 == heuristic.BANK_VALUE_10 && BROWN_VALUE == heuristic.BROWN_VALUE && LIGHTBLUE_VALUE == heuristic.LIGHTBLUE_VALUE && PINK_VALUE == heuristic.PINK_VALUE && ORANGE_VALUE == heuristic.ORANGE_VALUE && RED_VALUE == heuristic.RED_VALUE && YELLOW_VALUE == heuristic.YELLOW_VALUE && GREEN_VALUE == heuristic.GREEN_VALUE && BLUE_VALUE == heuristic.BLUE_VALUE && RAILROAD_VALUE == heuristic.RAILROAD_VALUE && UTILITY_VALUE == heuristic.UTILITY_VALUE && COMPLETESET_VALUE == heuristic.COMPLETESET_VALUE && HAND_SLYDEAL == heuristic.HAND_SLYDEAL && HAND_FORCEDDEAL == heuristic.HAND_FORCEDDEAL && HAND_DEBTCOLLECTOR == heuristic.HAND_DEBTCOLLECTOR && HAND_ITSMYBIRTHDAY == heuristic.HAND_ITSMYBIRTHDAY && HAND_DEALBREAKER == heuristic.HAND_DEALBREAKER && HAND_JUSTSAYNO == heuristic.HAND_JUSTSAYNO && HAND_MULTICOLORRENT == heuristic.HAND_MULTICOLORRENT && HAND_PROPERTYRENT == heuristic.HAND_PROPERTYRENT && HAND_MULTICOLORWILD == heuristic.HAND_MULTICOLORWILD && Objects.equals(cardValue, heuristic.cardValue) && Objects.equals(setValue, heuristic.setValue);
+        return BANK_VALUE_1 == heuristic.BANK_VALUE_1 && BANK_VALUE_2 == heuristic.BANK_VALUE_2 && BANK_VALUE_3 == heuristic.BANK_VALUE_3 && BANK_VALUE_4 == heuristic.BANK_VALUE_4 && BANK_VALUE_5 == heuristic.BANK_VALUE_5 && BANK_VALUE_10 == heuristic.BANK_VALUE_10 && BROWN_VALUE == heuristic.BROWN_VALUE && LIGHTBLUE_VALUE == heuristic.LIGHTBLUE_VALUE && PINK_VALUE == heuristic.PINK_VALUE && ORANGE_VALUE == heuristic.ORANGE_VALUE && RED_VALUE == heuristic.RED_VALUE && YELLOW_VALUE == heuristic.YELLOW_VALUE && GREEN_VALUE == heuristic.GREEN_VALUE && BLUE_VALUE == heuristic.BLUE_VALUE && RAILROAD_VALUE == heuristic.RAILROAD_VALUE && UTILITY_VALUE == heuristic.UTILITY_VALUE && COMPLETESET_VALUE == heuristic.COMPLETESET_VALUE && HAND_SLYDEAL == heuristic.HAND_SLYDEAL && HAND_FORCEDDEAL == heuristic.HAND_FORCEDDEAL && HAND_DEBTCOLLECTOR == heuristic.HAND_DEBTCOLLECTOR && HAND_ITSMYBIRTHDAY == heuristic.HAND_ITSMYBIRTHDAY && HAND_DEALBREAKER == heuristic.HAND_DEALBREAKER && HAND_JUSTSAYNO == heuristic.HAND_JUSTSAYNO && HAND_MULTICOLORRENT == heuristic.HAND_MULTICOLORRENT && HAND_PROPERTYRENT == heuristic.HAND_PROPERTYRENT && HAND_MULTICOLORWILD == heuristic.HAND_MULTICOLORWILD && HEURISTIC_TYPE == heuristic.HEURISTIC_TYPE && Objects.equals(cardValue, heuristic.cardValue) && Objects.equals(setValue, heuristic.setValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), BANK_VALUE_1, BANK_VALUE_2, BANK_VALUE_3, BANK_VALUE_4, BANK_VALUE_5, BANK_VALUE_10, BROWN_VALUE, LIGHTBLUE_VALUE, PINK_VALUE, ORANGE_VALUE, RED_VALUE, YELLOW_VALUE, GREEN_VALUE, BLUE_VALUE, RAILROAD_VALUE, UTILITY_VALUE, COMPLETESET_VALUE, HAND_SLYDEAL, HAND_FORCEDDEAL, HAND_DEBTCOLLECTOR, HAND_ITSMYBIRTHDAY, HAND_DEALBREAKER, HAND_JUSTSAYNO, HAND_MULTICOLORRENT, HAND_PROPERTYRENT, HAND_MULTICOLORWILD, cardValue, setValue);
+        return Objects.hash(super.hashCode(), BANK_VALUE_1, BANK_VALUE_2, BANK_VALUE_3, BANK_VALUE_4, BANK_VALUE_5, BANK_VALUE_10, BROWN_VALUE, LIGHTBLUE_VALUE, PINK_VALUE, ORANGE_VALUE, RED_VALUE, YELLOW_VALUE, GREEN_VALUE, BLUE_VALUE, RAILROAD_VALUE, UTILITY_VALUE, COMPLETESET_VALUE, HAND_SLYDEAL, HAND_FORCEDDEAL, HAND_DEBTCOLLECTOR, HAND_ITSMYBIRTHDAY, HAND_DEALBREAKER, HAND_JUSTSAYNO, HAND_MULTICOLORRENT, HAND_PROPERTYRENT, HAND_MULTICOLORWILD, HEURISTIC_TYPE, cardValue, setValue);
     }
 
     @Override
     public Object instantiate() {
         return _copy();
     }
+
 }

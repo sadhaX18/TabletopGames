@@ -6,6 +6,8 @@ import evaluation.metrics.AbstractMetric;
 import evaluation.metrics.Event;
 import evaluation.metrics.IMetricsCollection;
 import games.monopolydeal.actions.actioncards.*;
+import games.monopolydeal.actions.boardmanagement.AddMoney;
+import games.monopolydeal.cards.CardType;
 
 import java.util.*;
 
@@ -34,12 +36,12 @@ public class MonopolyDealMetrics implements IMetricsCollection {
     public static class CardsUsed extends AbstractMetric {
         public CardsUsed() {
             super();
-            counters = new int[9][5];
+            counters = new int[11][5];
         }
 
         public CardsUsed(Event.GameEvent... args) {
             super(args);
-            counters = new int[9][5];
+            counters = new int[11][5];
         }
         // Counters
         int[][] counters;
@@ -64,6 +66,13 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                     counters[7][e.state.getCurrentPlayer()]++;
                 else if (e.action instanceof JustSayNoAction)
                     counters[8][e.state.getCurrentPlayer()]++;
+                else if (e.action instanceof AddMoney){
+                    AddMoney action = (AddMoney) e.action;
+                    if(action.cardType == CardType.DealBreaker)
+                        counters[9][e.state.getCurrentPlayer()]++;
+                    else if(action.cardType == CardType.JustSayNo)
+                        counters[10][e.state.getCurrentPlayer()]++;
+                }
                 return false;
             } else if (GAME_OVER.equals(e.type)) {
                 int winner = e.state.getWinners().iterator().next();
@@ -76,6 +85,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                 records.put("PropertyRentByWinner", counters[6][winner]);
                 records.put("DealBreakerByWinner", counters[7][winner]);
                 records.put("JustSayNoByWinner", counters[8][winner]);
+                records.put("DealBreakerAddedToBankByWinner", counters[9][winner]);
+                records.put("JustSayNoAddedToBankByWinner", counters[10][winner]);
                 records.put("PassGoUsed", Arrays.stream(counters[0]).sum());
                 records.put("SlyDealUsed", Arrays.stream(counters[1]).sum());
                 records.put("ForcedDealUsed", Arrays.stream(counters[2]).sum());
@@ -85,8 +96,10 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                 records.put("PropertyRentUsed", Arrays.stream(counters[6]).sum());
                 records.put("DealBreakerUsed", Arrays.stream(counters[7]).sum());
                 records.put("JustSayNoUsed", Arrays.stream(counters[8]).sum());
+                records.put("DealBreakerAddedToBank", Arrays.stream(counters[9]).sum());
+                records.put("JustSayNoAddedToBank", Arrays.stream(counters[10]).sum());
 
-                for(int i=0;i<9;i++)
+                for(int i=0;i<11;i++)
                     for(int j=0;j<5;j++)
                         counters[i][j]=0;
 
@@ -112,6 +125,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
             columns.put("PropertyRentByWinner", Integer.class);
             columns.put("DealBreakerByWinner", Integer.class);
             columns.put("JustSayNoByWinner", Integer.class);
+            columns.put("DealBreakerAddedToBankByWinner", Integer.class);
+            columns.put("JustSayNoAddedToBankByWinner", Integer.class);
             columns.put("PassGoUsed", Integer.class);
             columns.put("SlyDealUsed", Integer.class);
             columns.put("ForcedDealUsed", Integer.class);
@@ -121,6 +136,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
             columns.put("PropertyRentUsed", Integer.class);
             columns.put("DealBreakerUsed", Integer.class);
             columns.put("JustSayNoUsed", Integer.class);
+            columns.put("DealBreakerAddedToBank", Integer.class);
+            columns.put("JustSayNoAddedToBank", Integer.class);
             return columns;
         }
 
