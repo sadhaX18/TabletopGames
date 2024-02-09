@@ -73,8 +73,15 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                     else if(action.cardType == CardType.JustSayNo)
                         counters[10][e.state.getCurrentPlayer()]++;
                 }
-                return false;
+                return true;
             } else if (GAME_OVER.equals(e.type)) {
+                if(e.state.getWinners().isEmpty()){
+                    for(int i=0;i<11;i++)
+                        for(int j=0;j<5;j++)
+                            counters[i][j]=0;
+                    return true;
+                }
+
                 int winner = e.state.getWinners().iterator().next();
                 records.put("PassGoByWinner", counters[0][winner]);
                 records.put("SlyDealByWinner", counters[1][winner]);

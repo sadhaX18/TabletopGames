@@ -34,6 +34,14 @@ import java.util.regex.Pattern;
 import static evaluation.RunArg.*;
 import static evaluation.tournaments.AbstractTournament.TournamentMode.*;
 import static java.util.stream.Collectors.toList;
+import static players.PlayerConstants.BUDGET_TIME;
+import static players.mcts.MCTSEnums.Information.Information_Set;
+import static players.mcts.MCTSEnums.OpponentTreePolicy.OneTree;
+import static players.mcts.MCTSEnums.OpponentTreePolicy.SelfOnly;
+import static players.mcts.MCTSEnums.SelectionPolicy.SIMPLE;
+import static players.mcts.MCTSEnums.Strategies.RANDOM;
+import static players.mcts.MCTSEnums.TreePolicy.UCB;
+import static players.mcts.MCTSEnums.TreePolicy.UCB_Tuned;
 
 
 public class RunGames implements IGameRunner {
@@ -87,16 +95,34 @@ public class RunGames implements IGameRunner {
         if (!runGames.config.get(playerDirectory).equals("")) {
             agents.addAll(PlayerFactory.createPlayers((String) runGames.config.get(playerDirectory)));
         } else {
-//            agents.add(new MCTSPlayer());
+            agents.add(new MCTSPlayer());
 //            agents.add(new BasicMCTSPlayer());
             agents.add(new RandomPlayer());
-//            agents.add(new RMHCPlayer());
+            agents.add(new RMHCPlayer());
 //            MCTSParams params = new MCTSParams();
+//            params.budget = 4;
+//            params.rolloutLength = 10;
+//            params.opponentTreePolicy = OneTree;
+//            params.heuristic = new players.heuristics.WinPlusHeuristic(1);
+//            params.K = 100;
+//            params.exploreEpsilon = 0.1;
+//            params.treePolicy = UCB;
+//            params.rolloutType = RANDOM;
+//            params.maxTreeDepth = 100;
+//            params.paranoid = false;
+//            params.budgetType = BUDGET_TIME;
+//            params.selectionPolicy = SIMPLE;
+//            params.information = Information_Set;
+//            params.epsilon = 1e-6;
+//            params.breakMS = 0;
+//            params.rolloutTermination = MCTSEnums.RolloutTermination.DEFAULT;
+//            params.nodesStoreScoreDelta = true;
+//            params.maintainMasterState = false;
 //            params.maxTreeDepth = 10;
 //            params.rolloutTermination = MCTSEnums.RolloutTermination.END_TURN;
 //            agents.add(new MCTSPlayer(params));
-            agents.add(new OSLAPlayer());
 //            agents.add(new OSLAPlayer());
+            agents.add(new OSLAPlayer());
 //            agents.add(new OSLAPlayer());
         }
         runGames.agents = agents;

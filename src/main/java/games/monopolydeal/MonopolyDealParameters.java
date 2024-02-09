@@ -98,21 +98,21 @@ public class MonopolyDealParameters extends TunableParameters {
         cardsIncludedInGame.put(CardType.Money4,3);
         cardsIncludedInGame.put(CardType.Money5,2);
 
-        //Action Cards
-        cardsIncludedInGame.put(CardType.PassGo,PASSGO_COUNT);
-        cardsIncludedInGame.put(CardType.DoubleTheRent,2);
-
-        cardsIncludedInGame.put(CardType.ForcedDeal,FORCEDDEAL_COUNT);
-        cardsIncludedInGame.put(CardType.SlyDeal,SLYDEAL_COUNT);
-
-        cardsIncludedInGame.put(CardType.DebtCollector,DEBTCOLLECTOR_COUNT);
-        cardsIncludedInGame.put(CardType.ItsMyBirthday,ITSMYBIRTHDAY_COUNT);
+//        //Action Cards
+//        cardsIncludedInGame.put(CardType.PassGo,PASSGO_COUNT);
+//        cardsIncludedInGame.put(CardType.DoubleTheRent,2);
+//
+//        cardsIncludedInGame.put(CardType.ForcedDeal,FORCEDDEAL_COUNT);
+//        cardsIncludedInGame.put(CardType.SlyDeal,SLYDEAL_COUNT);
+//
+//        cardsIncludedInGame.put(CardType.DebtCollector,DEBTCOLLECTOR_COUNT);
+//        cardsIncludedInGame.put(CardType.ItsMyBirthday,ITSMYBIRTHDAY_COUNT);
 
         cardsIncludedInGame.put(CardType.House,3);
         cardsIncludedInGame.put(CardType.Hotel,3);
-
-        cardsIncludedInGame.put(CardType.DealBreaker,DEALBREAKER_COUNT);
-        cardsIncludedInGame.put(CardType.JustSayNo,JUSTSAYNO_COUNT);
+//
+//        cardsIncludedInGame.put(CardType.DealBreaker,DEALBREAKER_COUNT);
+//        cardsIncludedInGame.put(CardType.JustSayNo,JUSTSAYNO_COUNT);
 
         //Property Cards
         cardsIncludedInGame.put(CardType.BrownProperty,2);
@@ -137,7 +137,7 @@ public class MonopolyDealParameters extends TunableParameters {
         cardsIncludedInGame.put(CardType.RailRoadLightBlueWild,1);
 
         //Rent Cards
-        cardsIncludedInGame.put(CardType.MulticolorRent,MULTICOLORRENT_COUNT);
+//        cardsIncludedInGame.put(CardType.MulticolorRent,MULTICOLORRENT_COUNT);
         cardsIncludedInGame.put(CardType.GreenBlueRent,PROPERTYRENT_COUNT);
         cardsIncludedInGame.put(CardType.BrownLightBlueRent,PROPERTYRENT_COUNT);
         cardsIncludedInGame.put(CardType.PinkOrangeRent,PROPERTYRENT_COUNT);

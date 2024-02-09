@@ -56,7 +56,6 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
 
     MonopolyDealHeuristicType HEURISTIC_TYPE = ALL;
 
-
     public MonopolyDealHeuristic(){
         addTunableParameter("BANK_VALUE_1", 1, Arrays.asList(1,2));
         addTunableParameter("BANK_VALUE_2", 2, Arrays.asList(2,3));
@@ -84,7 +83,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         addTunableParameter("HAND_PROPERTYRENT", 2, Arrays.asList(1,2,3));
         addTunableParameter("COMPLETESET_VALUE", 5, Arrays.asList(3,5,7));
         addTunableParameter("HAND_MULTICOLORWILD", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HEURISTIC_TYPE",PROPERTYONLY,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,ALL));
+        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,ALL));
         insertValues();
     }
     @Override
