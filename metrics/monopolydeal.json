@@ -1,9 +1,17 @@
 {
   "class": "evaluation.listeners.MetricsGameListener",
   "args": [
+    {"enum" : "evaluation.metrics.IDataLogger$ReportDestination", "value" : "ToFile"},
     [
-      {"class": "evaluation.metrics.GameMetrics$Decisions" },
+      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawData"},
+      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawDataPerEvent"}
+    ],
+    [
+      {"class": "evaluation.metrics.GameMetrics$GameScore" },
+      {"class": "evaluation.metrics.GameMetrics$FinalScore" },
+      {"class": "evaluation.metrics.GameMetrics$OrdinalPosition" },
       {"class": "evaluation.metrics.GameMetrics$Winner" },
+      {"class": "evaluation.metrics.GameMetrics$Actions" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$GameDuration" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$FinalHeuristicScore"},
       {"class": "games.monopolydeal.MonopolyDealMetrics$CardsUsed"}

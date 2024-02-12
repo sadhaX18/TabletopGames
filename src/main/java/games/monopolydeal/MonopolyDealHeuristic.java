@@ -15,10 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYONLY;
-import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYBANK;
-import static games.monopolydeal.MonopolyDealHeuristicType.PROPERTYHAND;
-import static games.monopolydeal.MonopolyDealHeuristicType.ALL;
+import static games.monopolydeal.MonopolyDealHeuristicType.*;
 
 public class MonopolyDealHeuristic extends TunableParameters implements IStateHeuristic {
 
@@ -83,7 +80,7 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
         addTunableParameter("HAND_PROPERTYRENT", 2, Arrays.asList(1,2,3));
         addTunableParameter("COMPLETESET_VALUE", 5, Arrays.asList(3,5,7));
         addTunableParameter("HAND_MULTICOLORWILD", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,ALL));
+        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,BASICALL, ALL));
         insertValues();
     }
     @Override

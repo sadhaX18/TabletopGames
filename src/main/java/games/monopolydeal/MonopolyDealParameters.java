@@ -51,7 +51,7 @@ public class MonopolyDealParameters extends TunableParameters {
     public MonopolyDealParameters() {
         addTunableParameter("HAND_SIZE", 7, Arrays.asList(3,5,7,10));
         addTunableParameter("INITIAL_DEAL", 5, Arrays.asList(3,5));
-        addTunableParameter("BOARD_MODIFICATIONS_PER_TURN", 3, Arrays.asList(3,5));
+        addTunableParameter("BOARD_MODIFICATIONS_PER_TURN", 5, Arrays.asList(3,5));
         addTunableParameter("DRAWS_PER_TURN", 2, Arrays.asList(2,3,5,7,10));
         addTunableParameter("DRAWS_WHEN_EMPTY", 5, Arrays.asList(3,5,7,10));
         addTunableParameter("SETS_TO_WIN", 3, Arrays.asList(3,5,7,10));
@@ -99,20 +99,20 @@ public class MonopolyDealParameters extends TunableParameters {
         cardsIncludedInGame.put(CardType.Money5,2);
 
 //        //Action Cards
-//        cardsIncludedInGame.put(CardType.PassGo,PASSGO_COUNT);
-//        cardsIncludedInGame.put(CardType.DoubleTheRent,2);
+        cardsIncludedInGame.put(CardType.PassGo,PASSGO_COUNT);
+        cardsIncludedInGame.put(CardType.DoubleTheRent,2);
 //
-//        cardsIncludedInGame.put(CardType.ForcedDeal,FORCEDDEAL_COUNT);
-//        cardsIncludedInGame.put(CardType.SlyDeal,SLYDEAL_COUNT);
+        cardsIncludedInGame.put(CardType.ForcedDeal,FORCEDDEAL_COUNT);
+        cardsIncludedInGame.put(CardType.SlyDeal,SLYDEAL_COUNT);
 //
-//        cardsIncludedInGame.put(CardType.DebtCollector,DEBTCOLLECTOR_COUNT);
-//        cardsIncludedInGame.put(CardType.ItsMyBirthday,ITSMYBIRTHDAY_COUNT);
+        cardsIncludedInGame.put(CardType.DebtCollector,DEBTCOLLECTOR_COUNT);
+        cardsIncludedInGame.put(CardType.ItsMyBirthday,ITSMYBIRTHDAY_COUNT);
 
         cardsIncludedInGame.put(CardType.House,3);
         cardsIncludedInGame.put(CardType.Hotel,3);
 //
-//        cardsIncludedInGame.put(CardType.DealBreaker,DEALBREAKER_COUNT);
-//        cardsIncludedInGame.put(CardType.JustSayNo,JUSTSAYNO_COUNT);
+        cardsIncludedInGame.put(CardType.DealBreaker,DEALBREAKER_COUNT);
+        cardsIncludedInGame.put(CardType.JustSayNo,JUSTSAYNO_COUNT);
 
         //Property Cards
         cardsIncludedInGame.put(CardType.BrownProperty,2);
@@ -137,7 +137,7 @@ public class MonopolyDealParameters extends TunableParameters {
         cardsIncludedInGame.put(CardType.RailRoadLightBlueWild,1);
 
         //Rent Cards
-//        cardsIncludedInGame.put(CardType.MulticolorRent,MULTICOLORRENT_COUNT);
+        cardsIncludedInGame.put(CardType.MulticolorRent,MULTICOLORRENT_COUNT);
         cardsIncludedInGame.put(CardType.GreenBlueRent,PROPERTYRENT_COUNT);
         cardsIncludedInGame.put(CardType.BrownLightBlueRent,PROPERTYRENT_COUNT);
         cardsIncludedInGame.put(CardType.PinkOrangeRent,PROPERTYRENT_COUNT);
