@@ -54,34 +54,23 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
     MonopolyDealHeuristicType HEURISTIC_TYPE = ALL;
 
     public MonopolyDealHeuristic(int type){
-        addTunableParameter("BANK_VALUE_1", 1, Arrays.asList(1,2));
-        addTunableParameter("BANK_VALUE_2", 2, Arrays.asList(2,3));
-        addTunableParameter("BANK_VALUE_3", 2, Arrays.asList(2,3));
-        addTunableParameter("BANK_VALUE_4", 3, Arrays.asList(2,3,4));
-        addTunableParameter("BANK_VALUE_5", 3, Arrays.asList(2,3,4));
-        addTunableParameter("BANK_VALUE_10", 5, Arrays.asList(3,4,5));
-        addTunableParameter("BROWN_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("LIGHTBLUE_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("PINK_VALUE", 2, Arrays.asList(1,2,3));
-        addTunableParameter("ORANGE_VALUE", 2, Arrays.asList(1,2,3));
-        addTunableParameter("RED_VALUE", 3, Arrays.asList(2,3,4));
-        addTunableParameter("YELLOW_VALUE", 3, Arrays.asList(2,3,4));
-        addTunableParameter("GREEN_VALUE", 4, Arrays.asList(3,4,5));
-        addTunableParameter("BLUE_VALUE", 4, Arrays.asList(3,4,5));
-        addTunableParameter("RAILROAD_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("UTILITY_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_SLYDEAL", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_FORCEDDEAL", 2, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_DEBTCOLLECTOR", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_ITSMYBIRTHDAY", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_DEALBREAKER", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HAND_JUSTSAYNO", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HAND_MULTICOLORRENT", 2, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_PROPERTYRENT", 2, Arrays.asList(1,2,3));
-        addTunableParameter("COMPLETESET_VALUE", 5, Arrays.asList(3,5,7));
-        addTunableParameter("HAND_MULTICOLORWILD", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,BASICALL, ALL));
-        insertValues();
+        this();
+        switch(type){
+            case 1:
+                HEURISTIC_TYPE = PROPERTYONLY;
+                break;
+            case 2:
+                HEURISTIC_TYPE = PROPERTYBANK;
+                break;
+            case 3:
+                HEURISTIC_TYPE = BASICALL;
+                break;
+            case 4:
+                HEURISTIC_TYPE = ALL;
+                break;
+            default:
+                throw new AssertionError("Not yet implemented");
+        }
     }
     public MonopolyDealHeuristic(){
         addTunableParameter("BANK_VALUE_1", 1, Arrays.asList(1,2));
