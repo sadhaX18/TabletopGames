@@ -12,6 +12,10 @@
       {"class": "evaluation.metrics.GameMetrics$OrdinalPosition" },
       {"class": "evaluation.metrics.GameMetrics$Winner" },
       {"class": "evaluation.metrics.GameMetrics$Actions" },
+      {"class": "evaluation.metrics.GameMetrics$StateSpace" },
+      {"class": "evaluation.metrics.GameMetrics$ComputationTimes" },
+      {"class": "evaluation.metrics.GameMetrics$Decisions" },
+      {"class": "evaluation.metrics.GameMetrics$Actions" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$GameDuration" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$FinalHeuristicScore"},
       {"class": "games.monopolydeal.MonopolyDealMetrics$ActionsTaken"}

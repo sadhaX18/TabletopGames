@@ -18,6 +18,7 @@ import players.basicMCTS.BasicMCTSPlayer;
 import players.mcts.MCTSEnums;
 import players.mcts.MCTSParams;
 import players.mcts.MCTSPlayer;
+import players.rhea.RHEAPlayer;
 import players.rmhc.RMHCPlayer;
 import players.simple.OSLAPlayer;
 import players.simple.RandomPlayer;
