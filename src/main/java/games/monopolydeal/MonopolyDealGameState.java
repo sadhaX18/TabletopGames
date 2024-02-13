@@ -418,8 +418,7 @@ public class MonopolyDealGameState extends AbstractGameState {
     @Override
     protected double _getHeuristicScore(int playerId) {
         if (isNotTerminal()) {
-//            return heuristic.evaluateState(this,playerId);
-            return getGameScore(playerId);
+            return heuristic.evaluateState(this,playerId);
         } else {
             // The game finished, we can instead return the actual result of the game for the given player.
             return getPlayerResults()[playerId].value;
