@@ -48,9 +48,10 @@ public class DiscardCard extends AbstractAction {
     }
 
     @Override
-    public String getString(AbstractGameState state) {
-        return String.format("Player %d discards %s", player, type);
-    }
+    public String getString(AbstractGameState state) {return toString();}
+
+    @Override
+    public String toString() {return "Discard "+ type;}
 
     @Override
     public boolean equals(Object other) {

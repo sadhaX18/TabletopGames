@@ -33,6 +33,35 @@ public class MonopolyDealMetrics implements IMetricsCollection {
         }
     }
 
+    public static class ActionsTaken extends AbstractMetric{
+
+        @Override
+        protected boolean _run(MetricsGameListener listener, Event e, Map<String, Object> records) {
+            if (ACTION_CHOSEN.equals(e.type)) {
+                records.put("ActionsTaken", e.action.toString());
+                records.put("PlayerID", e.playerID);
+            }
+            else if(GAME_OVER.equals(e.type)){
+                if(e.state.getWinners().isEmpty()){return true;}
+                records.put("Winner",e.state.getWinners().iterator().next());
+            }
+            return true;
+        }
+
+        @Override
+        public Set<IGameEvent> getDefaultEventTypes() {
+            return new HashSet<>(Arrays.asList(ACTION_CHOSEN, GAME_OVER));
+        }
+
+        @Override
+        public Map<String, Class<?>> getColumns(int nPlayersPerGame, Set<String> playerNames) {
+            Map<String, Class<?>> columns = new HashMap<>();
+            columns.put("ActionsTaken", String.class);
+            columns.put("PlayerID", Integer.class);
+            columns.put("Winner", Integer.class);
+            return columns;
+        }
+    }
     public static class CardsUsed extends AbstractMetric {
         public CardsUsed() {
             super();
