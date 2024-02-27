@@ -282,7 +282,7 @@ public abstract class AbstractGUIManager {
         gamePhase.setText("Game phase: " + gameState.getGamePhase());
         turn.setText("Turn: " + gameState.getTurnCounter() +
                 "; Round: " + gameState.getRoundCounter());
-        currentPlayer.setText("Current player: " + gameState.getCurrentPlayer());
+        currentPlayer.setText("Current player: " + (gameState.getCurrentPlayer()+1));
     }
 
 
