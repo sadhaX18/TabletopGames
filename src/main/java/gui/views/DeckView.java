@@ -10,8 +10,6 @@ import java.awt.event.*;
 public abstract class DeckView<T extends Component> extends ComponentView {
     protected boolean front;
 
-    // Minimum distance between cards drawn in deck area
-    public int minCardOffset = 5;
     // Rectangles where cards are drawn, used for highlighting
     protected Rectangle[] rects;
     // Rectangle containing the DeckView
@@ -25,6 +23,12 @@ public abstract class DeckView<T extends Component> extends ComponentView {
 
     // card and display sizes
     protected int itemWidth, itemHeight;
+
+    boolean horizontal = true;
+
+    public void setHorizontal(boolean horizontal) {
+        this.horizontal = horizontal;
+    }
 
     public DeckView(int player, Deck<T> d, boolean visible, int componentWidth, int componentHeight) {
         this(player, d, visible, componentWidth, componentHeight, new Rectangle(0, 0, componentWidth, componentHeight));
@@ -96,15 +100,20 @@ public abstract class DeckView<T extends Component> extends ComponentView {
     }
 
     public void drawDeck(Graphics2D g) {
+        int size = g.getFont().getSize();
         @SuppressWarnings("unchecked") Deck<T> deck = (Deck<T>) component;
         if (deck != null && deck.getSize() > 0) {
             // Draw cards, 0 index on top
-            int offset = Math.max((rect.width - itemWidth) / deck.getSize(), minCardOffset);
+            int offset = (rect.width - itemWidth) / deck.getSize();
+            if (!horizontal) offset = (rect.height - itemHeight) / deck.getSize();
+            if (horizontal && rect.width == itemWidth || !horizontal && rect.height == itemHeight) offset = 0;
             rects = new Rectangle[deck.getSize()];
             for (int i = deck.getSize() - 1; i >= 0; i--) {
                 if (i < deck.getSize()) {
                     T card = deck.get(i);
-                    Rectangle r = new Rectangle(rect.x + offset * i, rect.y, itemWidth, itemHeight);
+                    Rectangle r;
+                    if (horizontal) r = new Rectangle(rect.x + offset * i, rect.y + size + 5, itemWidth, itemHeight);
+                    else r = new Rectangle(rect.x, rect.y + offset * i + size + 5, itemWidth, itemHeight);
                     rects[i] = r;
                     drawComponent(g, r, card, front || componentVisibility(deck, i));
                 }
@@ -119,12 +128,13 @@ public abstract class DeckView<T extends Component> extends ComponentView {
                     cardHighlight = -1;
                 }
             }
-            int size = g.getFont().getSize();
-//            String name = deck.getComponentName();
-//            if (name != null && !name.equals("")) {
-//                g.drawString(name, rect.x + 10, rect.y + size + 20);
-//            }
-            g.drawString("" + deck.getSize(), rect.x + 10, rect.y + rect.height - size);
+        }
+        if (deck != null) {
+            String name = deck.getComponentName();
+            if (name != null && !name.isEmpty()) {
+                g.drawString(name, rect.x, rect.y + size + 2);
+            }
+//            g.drawString("" + deck.getSize(), rect.x + 10, rect.y + rect.height - size);
         }
     }
 
@@ -189,17 +199,20 @@ public abstract class DeckView<T extends Component> extends ComponentView {
         }
 
         int size = g.getFont().getSize();
-        if (name != null && !name.equals("")) {
-            g.drawString(name, rect.x + 10, rect.y + size + 20);
+        if (name != null && !name.isEmpty()) {
+            g.drawString(name, rect.x, rect.y + size + 20);
         }
         if (deck != null) {
-            g.drawString("" + deck.getSize(), rect.x + 10, rect.y + rect.height - size);
+            g.drawString("" + deck.getSize(), rect.x, rect.y + rect.height - size);
         }
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(rect.width, rect.height);
+        return new Dimension(rect.width+5, rect.height+20);
+    }
+    public Dimension getMinimumSize() {
+        return new Dimension(rect.width+5, rect.height+20);
     }
 
     // Getters, setters

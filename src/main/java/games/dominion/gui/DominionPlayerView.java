@@ -40,10 +40,8 @@ public class DominionPlayerView extends JComponent {
                 new Rectangle(0, 0, handWidth, cardHeight));
         playerDiscard = new DominionDeckView(humanId, state.getDeck(DeckType.DISCARD, playerId), true, dataPath,
                 new Rectangle(0, 0, cardWidth, cardHeight));
-        playerDiscard.minCardOffset = 0;
         playerDraw = new DominionDeckView(humanId, state.getDeck(DeckType.DRAW, playerId), false, dataPath,
                 new Rectangle(0, 0, cardWidth, cardHeight));
-        playerDraw.minCardOffset = 0;
         playerTableau = new DominionDeckView(humanId, state.getDeck(DeckType.TABLE, playerId), true, dataPath,
                 new Rectangle(0, 0, handWidth, cardHeight));
 

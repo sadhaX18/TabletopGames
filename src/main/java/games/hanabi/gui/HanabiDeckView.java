@@ -33,7 +33,7 @@ public class HanabiDeckView extends DeckView<HanabiCard> {
         @SuppressWarnings("unchecked") Deck<HanabiCard> deck = (Deck<HanabiCard>) component;
         if (deck != null && deck.getSize() > 0) {
             // Draw cards, 0 index on top
-            int offset = Math.max((rect.width - itemWidth) / deck.getSize(), minCardOffset);
+            int offset = (rect.width - itemWidth) / deck.getSize();
             rects = new Rectangle[deck.getSize()];
             for (int i = deck.getSize() - 1; i >= 0; i--) {
                 if (i < deck.getSize()) {

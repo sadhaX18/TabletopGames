@@ -73,5 +73,32 @@ public class CoreConstants {
         GameResult(double value) {
             this.value = value;
         }
+
+        public String shortString() {
+            switch (this) {
+                case WIN_GAME:
+                    return "Win";
+                case WIN_ROUND:
+                    return "Win(R)";
+                case DRAW_GAME:
+                    return "Draw";
+                case DRAW_ROUND:
+                    return "Draw(R)";
+                case LOSE_ROUND:
+                    return "Lose(R)";
+                case LOSE_GAME:
+                    return "Lose";
+                case DISQUALIFY:
+                    return "Disq.";
+                case TIMEOUT:
+                    return "Timeout";
+                case GAME_ONGOING:
+                    return "N/A";
+                case GAME_END:
+                    return "End";
+                default:
+                    return "Unknown";
+            }
+        }
     }
 }

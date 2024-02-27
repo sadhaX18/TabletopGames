@@ -171,15 +171,20 @@ public abstract class AbstractGUIManager {
         return humanPlayerId;
     }
 
-    /**
-     * Creates a JPanel containing labels with default game state information.
-     *
-     * @param gameTitle - title of the game, displayed first at the top
-     * @param gameState - initial game state.
-     * @return - JPanel containing several JLabels with game state information.
-     */
     protected JPanel createGameStateInfoPanel(String gameTitle, AbstractGameState gameState, int width, int height) {
+        return createGameStateInfoPanel(gameTitle, gameState, width, height, true);
+    }
+
+        /**
+         * Creates a JPanel containing labels with default game state information.
+         *
+         * @param gameTitle - title of the game, displayed first at the top
+         * @param gameState - initial game state.
+         * @return - JPanel containing several JLabels with game state information.
+         */
+    protected JPanel createGameStateInfoPanel(String gameTitle, AbstractGameState gameState, int width, int height, boolean opaque) {
         JPanel gameInfo = new JPanel();
+        gameInfo.setOpaque(opaque);
         gameInfo.setLayout(new BoxLayout(gameInfo, BoxLayout.Y_AXIS));
         gameInfo.add(new JLabel("<html><h1>" + gameTitle + "</h1></html>"));
 
@@ -195,11 +200,15 @@ public abstract class AbstractGUIManager {
         gameInfo.setPreferredSize(new Dimension(width / 2 - 10, height));
 
         JPanel wrapper = new JPanel();
+        wrapper.setOpaque(opaque);
         wrapper.setLayout(new FlowLayout());
         wrapper.add(gameInfo);
 
         createActionHistoryPanel(width / 2 - 10, height, humanPlayerId);
         wrapper.add(historyContainer);
+
+        historyContainer.setOpaque(opaque);
+        historyContainer.getViewport().setOpaque(opaque);
         return wrapper;
     }
 
@@ -258,9 +267,16 @@ public abstract class AbstractGUIManager {
             historyInfo.setText(String.join("\n", history));
             historyInfo.setCaretPosition(historyInfo.getDocument().getLength());
         }
-        gameStatus.setText("Game status: " + gameState.getGameStatus());
-        playerStatus.setText(Arrays.toString(gameState.getPlayerResults()));
-        playerScores.setText("Player Scores: " + IntStream.range(0, gameState.getNPlayers())
+        String shortStr = gameState.getGameStatus().shortString();
+        if (shortStr.equals("N/A")) shortStr = "Ongoing";
+        gameStatus.setText("Game status: " + shortStr);
+        String pResults = "";
+        for (int i = 0; i < gameState.getNPlayers(); i++) {
+            pResults += gameState.getPlayerResults()[i].shortString() + ", ";
+        }
+        pResults = pResults.substring(0, pResults.length() - 2);
+        playerStatus.setText("Player results: " + pResults);
+        playerScores.setText("Player scores: " + IntStream.range(0, gameState.getNPlayers())
                 .mapToObj(p -> String.format("%.0f", gameState.getGameScore(p)))
                 .collect(joining(", ")));
         gamePhase.setText("Game phase: " + gameState.getGamePhase());

@@ -1,23 +1,19 @@
 package games.monopolydeal;
 
-import com.clearspring.analytics.util.Lists;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Component;
 import core.components.Deck;
-import core.components.PartialObservableDeck;
 import core.interfaces.IGamePhase;
 import games.GameType;
 import games.monopolydeal.cards.CardType;
 import games.monopolydeal.cards.MonopolyDealCard;
 import games.monopolydeal.cards.PropertySet;
 import games.monopolydeal.cards.SetType;
-import org.apache.poi.ss.formula.atp.Switch;
-
-import static core.CoreConstants.VisibilityMode.HIDDEN_TO_ALL;
-import static core.CoreConstants.VisibilityMode.VISIBLE_TO_ALL;
 
 import java.util.*;
+
+import static core.CoreConstants.VisibilityMode.*;
 
 /**
  * <p>The game state encapsulates all game information. It is a data-only class, with game functionality present
@@ -34,7 +30,7 @@ public class MonopolyDealGameState extends AbstractGameState {
 
     // GameState members
     // Player Data members
-    PartialObservableDeck<MonopolyDealCard>[] playerHands;
+    Deck<MonopolyDealCard>[] playerHands;
     Deck<MonopolyDealCard>[] playerBanks;
     PropertySet[][] playerPropertySets;
 
@@ -61,16 +57,14 @@ public class MonopolyDealGameState extends AbstractGameState {
     }
 
     protected void _reset() {
-        playerHands = new PartialObservableDeck[getNPlayers()];
+        playerHands = new Deck[getNPlayers()];
         playerBanks = new Deck[getNPlayers()];
         playerPropertySets = new PropertySet[getNPlayers()][11];
-        drawPile = new Deck<>("Draw Pile",HIDDEN_TO_ALL);
-        discardPile = new Deck<>("Discard Pile",VISIBLE_TO_ALL);
+        drawPile = new Deck<>("Draw",HIDDEN_TO_ALL);
+        discardPile = new Deck<>("Discard",VISIBLE_TO_ALL);
         for(int i=0;i<getNPlayers();i++){
-            boolean[] handVisibility = new boolean[getNPlayers()];
-            handVisibility[i] = true;
-            playerHands[i] = new PartialObservableDeck<>("Hand of Player " + i + 1, handVisibility);
-            playerBanks[i] = new Deck<>("Bank of Player"+i+1,VISIBLE_TO_ALL);
+            playerHands[i] = new Deck<>("Hand P" + (i + 1), VISIBLE_TO_OWNER);
+            playerBanks[i] = new Deck<>("Bank P"+(i+1),VISIBLE_TO_ALL);
             initPropertySets(i);
         }
     }
@@ -221,48 +215,14 @@ public class MonopolyDealGameState extends AbstractGameState {
                     if(pSet.get(i).cardType()!= CardType.MulticolorWild) return false;
                 }
             }
-        } else if (playerBanks[playerID].getSize()>0) {
-            return false;
-        }
+        } else return playerBanks[playerID].getSize() <= 0;
         return true;
     }
     // initialize propertySet
     public void initPropertySets(int playerID){
-        for(int i=0;i<11;i++) {
-            PropertySet pSet = new PropertySet(getSetType4Init(i).toString(), VISIBLE_TO_ALL, getSetType4Init(i));
+        for(int i=0;i<SetType.values().length;i++) {
+            PropertySet pSet = new PropertySet("Set " + SetType.values()[i].name(), VISIBLE_TO_ALL, SetType.values()[i]);
             playerPropertySets[playerID][i] = pSet;
-        }
-    }
-    public SetType getSetType4Init(int i){
-        switch (i){
-            case 0: return SetType.Brown;
-            case 1: return SetType.LightBlue;
-            case 2: return SetType.Pink;
-            case 3: return SetType.Orange;
-            case 4: return SetType.Red;
-            case 5: return SetType.Yellow;
-            case 6: return SetType.Green;
-            case 7: return SetType.Blue;
-            case 8: return SetType.RailRoad;
-            case 9: return SetType.Utility;
-            case 10: return SetType.UNDEFINED;
-            default: throw new AssertionError("Should not happen");
-        }
-    }
-    public int getSetIndx(SetType setType){
-        switch (setType){
-            case Brown: return 0;
-            case LightBlue: return 1;
-            case Pink: return 2;
-            case Orange: return 3;
-            case Red: return 4;
-            case Yellow: return 5;
-            case Green: return 6;
-            case Blue: return 7;
-            case RailRoad: return 8;
-            case Utility: return 9;
-            case UNDEFINED: return 10;
-            default: throw new AssertionError("Should not happen");
         }
     }
     // add property
@@ -273,20 +233,17 @@ public class MonopolyDealGameState extends AbstractGameState {
     public void addPropertyToSet(int playerID, CardType cardType, SetType SType){
         MonopolyDealCard card = new MonopolyDealCard(cardType);
         card.setUseAs(SType);
-        int indx = getSetIndx(SType);
-        playerPropertySets[playerID][indx].add(card);
+        playerPropertySets[playerID][SType.ordinal()].add(card);
     }
     public void removePropertyFrom(int playerID, CardType cardType, SetType from){
         MonopolyDealCard card = new MonopolyDealCard(cardType);
-        int indx = getSetIndx(from);
-        playerPropertySets[playerID][indx].remove(card);
+        playerPropertySets[playerID][from.ordinal()].remove(card);
     }
     public void movePropertySetFromTo(SetType setType, int target, int playerID) {
-        int indx = getSetIndx(setType);
-        PropertySet pSet = playerPropertySets[target][indx].copy();
+        PropertySet pSet = playerPropertySets[target][setType.ordinal()].copy();
         for(int i=0; i<pSet.getSize(); i++){
-            playerPropertySets[target][indx].remove(pSet.get(i));
-            playerPropertySets[playerID][indx].add(pSet.get(i));
+            playerPropertySets[target][setType.ordinal()].remove(pSet.get(i));
+            playerPropertySets[playerID][setType.ordinal()].add(pSet.get(i));
         }
     }
     public boolean checkForForcedDeal(int playerID){
@@ -338,8 +295,7 @@ public class MonopolyDealGameState extends AbstractGameState {
         return false;
     }
     public boolean playerHasSet(int playerID, SetType setType){
-        if(playerPropertySets[playerID][getSetIndx(setType)].getPropertySetSize() > 0) return true;
-        return false;
+        return playerPropertySets[playerID][setType.ordinal()].getPropertySetSize() > 0;
     }
     public boolean checkActionCard(int playerID, CardType cardType){
         switch (cardType){
@@ -380,7 +336,7 @@ public class MonopolyDealGameState extends AbstractGameState {
         return false;
     }
     public PropertySet getPlayerPropertySet(int playerID, SetType setType) {
-        return playerPropertySets[playerID][getSetIndx(setType)];
+        return playerPropertySets[playerID][setType.ordinal()];
     }
     public void useAction(int actionCost) {
         actionsLeft = actionsLeft-actionCost;
@@ -402,6 +358,14 @@ public class MonopolyDealGameState extends AbstractGameState {
     public Deck<MonopolyDealCard> getDiscardPile() { return discardPile; }
     public Deck<MonopolyDealCard> getDrawPile(){ return drawPile; }
     public boolean CheckForJustSayNo(int playerID) { return playerHands[playerID].getComponents().contains(MonopolyDealCard.create(CardType.JustSayNo)); }
+
+    public int getBankValue(int playerID){
+        Deck<MonopolyDealCard> playerBank = getPlayerBank(playerID);
+        int bankValue = 0;
+        for(int i=0;i<playerBank.getSize();i++)
+            bankValue = bankValue + playerBank.get(i).cardMoneyValue();
+        return bankValue;
+    }
 
     public boolean checkForGameEnd() {
         if(deckEmpty) return true;
@@ -446,7 +410,7 @@ public class MonopolyDealGameState extends AbstractGameState {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MonopolyDealGameState state = (MonopolyDealGameState) o;
-        return actionsLeft == state.actionsLeft && boardModificationsLeft == state.boardModificationsLeft && deckEmpty == state.deckEmpty && Arrays.equals(playerHands, state.playerHands) && Arrays.equals(playerBanks, state.playerBanks) && Arrays.equals(playerPropertySets, state.playerPropertySets) && Objects.equals(drawPile, state.drawPile) && Objects.equals(discardPile, state.discardPile);
+        return actionsLeft == state.actionsLeft && boardModificationsLeft == state.boardModificationsLeft && deckEmpty == state.deckEmpty && Arrays.equals(playerHands, state.playerHands) && Arrays.equals(playerBanks, state.playerBanks) && Arrays.deepEquals(playerPropertySets, state.playerPropertySets) && Objects.equals(drawPile, state.drawPile) && Objects.equals(discardPile, state.discardPile);
     }
     @Override
     public int hashCode() {
