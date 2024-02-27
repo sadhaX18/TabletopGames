@@ -46,8 +46,6 @@ public class MonopolyDealGameState extends AbstractGameState {
     int boardModificationsLeft;
     boolean deckEmpty = false;
 
-    MonopolyDealHeuristic heuristic;
-
     /**
      * @param gameParameters - game parameters.
      * @param nPlayers       - number of players in the game
@@ -56,7 +54,6 @@ public class MonopolyDealGameState extends AbstractGameState {
         super(gameParameters, nPlayers);
         rnd = new Random(gameParameters.getRandomSeed());
         params = (MonopolyDealParameters) gameParameters;
-        heuristic = new MonopolyDealHeuristic();
         this._reset();
     }
 
@@ -278,6 +275,9 @@ public class MonopolyDealGameState extends AbstractGameState {
     }
     public void removePropertyFrom(int playerID, CardType cardType, SetType from){
         MonopolyDealCard card = new MonopolyDealCard(cardType);
+        if(card.isPropertyWildCard() || card.cardType()== CardType.House || card.cardType()== CardType.Hotel){
+            card.setUseAs(from);
+        }
         int indx = getSetIndx(from);
         playerPropertySets[playerID][indx].remove(card);
     }

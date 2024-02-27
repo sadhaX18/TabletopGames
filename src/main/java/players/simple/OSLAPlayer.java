@@ -30,6 +30,10 @@ public class OSLAPlayer extends AbstractPlayer {
     public OSLAPlayer(IStateHeuristic heuristic) {
         this(heuristic, new Random());
     }
+    public OSLAPlayer(IStateHeuristic heuristic, String name) {
+        this(heuristic, new Random());
+        setName(name);
+    }
 
     public OSLAPlayer(IStateHeuristic heuristic, Random random) {
         this(random);

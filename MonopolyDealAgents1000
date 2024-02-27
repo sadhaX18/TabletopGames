@@ -540,3 +540,375 @@ OSLA: Win rate 0.30 +/- 0.01	Mean Ordinal 1.79 +/- 0.01
 RMHCPlayer: Win rate 0.03 +/- 0.00	Mean Ordinal 2.50 +/- 0.01
 Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.71 +/- 0.01
 
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: NO_SELF_PLAY
+MCTSPlayer got 688.00 points. MCTSPlayer won 68.8% of the 1000 games of the tournament. MCTSPlayer won 68.8% of the 1000 games it played during the tournament.
+MCTSPlayer won 68.8% of the 1000 games against Random.
+MCTSPlayer won 68.8% of the 1000 games against RMHCPlayer.
+MCTSPlayer won 68.8% of the 1000 games against OSLA.
+
+Random got 1.00 points. Random won 0.1% of the 1000 games of the tournament. Random won 0.1% of the 1000 games it played during the tournament.
+Random won 0.1% of the 1000 games against MCTSPlayer.
+Random won 0.1% of the 1000 games against RMHCPlayer.
+Random won 0.1% of the 1000 games against OSLA.
+
+RMHCPlayer got 42.00 points. RMHCPlayer won 4.2% of the 1000 games of the tournament. RMHCPlayer won 4.2% of the 1000 games it played during the tournament.
+RMHCPlayer won 4.2% of the 1000 games against MCTSPlayer.
+RMHCPlayer won 4.2% of the 1000 games against Random.
+RMHCPlayer won 4.2% of the 1000 games against OSLA.
+
+OSLA got 269.00 points. OSLA won 26.9% of the 1000 games of the tournament. OSLA won 26.9% of the 1000 games it played during the tournament.
+OSLA won 26.9% of the 1000 games against MCTSPlayer.
+OSLA won 26.9% of the 1000 games against Random.
+OSLA won 26.9% of the 1000 games against RMHCPlayer.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.69 +/- 0.01	Mean Ordinal 1.35 +/- 0.01
+OSLA: Win rate 0.27 +/- 0.01	Mean Ordinal 1.83 +/- 0.01
+RMHCPlayer: Win rate 0.04 +/- 0.00	Mean Ordinal 2.47 +/- 0.01
+Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.73 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: NO_SELF_PLAY
+MCTSPlayer got 817.00 points. MCTSPlayer won 81.7% of the 1000 games of the tournament. MCTSPlayer won 81.7% of the 1000 games it played during the tournament.
+MCTSPlayer won 81.7% of the 1000 games against Random.
+MCTSPlayer won 81.7% of the 1000 games against RMHCPlayer.
+MCTSPlayer won 81.7% of the 1000 games against OSLA.
+
+Random got 1.00 points. Random won 0.1% of the 1000 games of the tournament. Random won 0.1% of the 1000 games it played during the tournament.
+Random won 0.1% of the 1000 games against MCTSPlayer.
+Random won 0.1% of the 1000 games against RMHCPlayer.
+Random won 0.1% of the 1000 games against OSLA.
+
+RMHCPlayer got 21.00 points. RMHCPlayer won 2.1% of the 1000 games of the tournament. RMHCPlayer won 2.1% of the 1000 games it played during the tournament.
+RMHCPlayer won 2.1% of the 1000 games against MCTSPlayer.
+RMHCPlayer won 2.1% of the 1000 games against Random.
+RMHCPlayer won 2.1% of the 1000 games against OSLA.
+
+OSLA got 161.00 points. OSLA won 16.1% of the 1000 games of the tournament. OSLA won 16.1% of the 1000 games it played during the tournament.
+OSLA won 16.1% of the 1000 games against MCTSPlayer.
+OSLA won 16.1% of the 1000 games against Random.
+OSLA won 16.1% of the 1000 games against RMHCPlayer.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.82 +/- 0.00	Mean Ordinal 1.22 +/- 0.01
+OSLA: Win rate 0.16 +/- 0.00	Mean Ordinal 1.94 +/- 0.01
+RMHCPlayer: Win rate 0.02 +/- 0.00	Mean Ordinal 2.43 +/- 0.01
+Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.68 +/- 0.02
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: NO_SELF_PLAY
+MCTSPlayer got 788.00 points. MCTSPlayer won 78.8% of the 1000 games of the tournament. MCTSPlayer won 78.8% of the 1000 games it played during the tournament.
+MCTSPlayer won 78.8% of the 1000 games against Random.
+MCTSPlayer won 78.8% of the 1000 games against RMHCPlayer.
+MCTSPlayer won 78.8% of the 1000 games against OSLA.
+
+Random got 2.00 points. Random won 0.2% of the 1000 games of the tournament. Random won 0.2% of the 1000 games it played during the tournament.
+Random won 0.2% of the 1000 games against MCTSPlayer.
+Random won 0.2% of the 1000 games against RMHCPlayer.
+Random won 0.2% of the 1000 games against OSLA.
+
+RMHCPlayer got 22.00 points. RMHCPlayer won 2.2% of the 1000 games of the tournament. RMHCPlayer won 2.2% of the 1000 games it played during the tournament.
+RMHCPlayer won 2.2% of the 1000 games against MCTSPlayer.
+RMHCPlayer won 2.2% of the 1000 games against Random.
+RMHCPlayer won 2.2% of the 1000 games against OSLA.
+
+OSLA got 188.00 points. OSLA won 18.8% of the 1000 games of the tournament. OSLA won 18.8% of the 1000 games it played during the tournament.
+OSLA won 18.8% of the 1000 games against MCTSPlayer.
+OSLA won 18.8% of the 1000 games against Random.
+OSLA won 18.8% of the 1000 games against RMHCPlayer.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.79 +/- 0.01	Mean Ordinal 1.25 +/- 0.01
+OSLA: Win rate 0.19 +/- 0.00	Mean Ordinal 1.90 +/- 0.01
+RMHCPlayer: Win rate 0.02 +/- 0.00	Mean Ordinal 2.44 +/- 0.01
+Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.69 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: NO_SELF_PLAY
+MCTSPlayer got 799.25 points. MCTSPlayer won 79.9% of the 1000 games of the tournament. MCTSPlayer won 79.9% of the 1000 games it played during the tournament.
+MCTSPlayer won 79.9% of the 1000 games against Random.
+MCTSPlayer won 79.9% of the 1000 games against RMHCPlayer.
+MCTSPlayer won 79.9% of the 1000 games against OSLA.
+
+Random got 1.25 points. Random won 0.1% of the 1000 games of the tournament. Random won 0.1% of the 1000 games it played during the tournament.
+Random won 0.1% of the 1000 games against MCTSPlayer.
+Random won 0.1% of the 1000 games against RMHCPlayer.
+Random won 0.1% of the 1000 games against OSLA.
+
+RMHCPlayer got 19.25 points. RMHCPlayer won 1.9% of the 1000 games of the tournament. RMHCPlayer won 1.9% of the 1000 games it played during the tournament.
+RMHCPlayer won 1.9% of the 1000 games against MCTSPlayer.
+RMHCPlayer won 1.9% of the 1000 games against Random.
+RMHCPlayer won 1.9% of the 1000 games against OSLA.
+
+OSLA got 180.25 points. OSLA won 18.0% of the 1000 games of the tournament. OSLA won 18.0% of the 1000 games it played during the tournament.
+OSLA won 18.0% of the 1000 games against MCTSPlayer.
+OSLA won 18.0% of the 1000 games against Random.
+OSLA won 18.0% of the 1000 games against RMHCPlayer.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.80 +/- 0.01	Mean Ordinal 1.23 +/- 0.01
+OSLA: Win rate 0.18 +/- 0.00	Mean Ordinal 1.91 +/- 0.01
+RMHCPlayer: Win rate 0.02 +/- 0.00	Mean Ordinal 2.43 +/- 0.01
+Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.67 +/- 0.02
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: NO_SELF_PLAY
+MCTSPlayer got 800.00 points. MCTSPlayer won 80.0% of the 1000 games of the tournament. MCTSPlayer won 80.0% of the 1000 games it played during the tournament.
+MCTSPlayer won 80.0% of the 1000 games against Random.
+MCTSPlayer won 80.0% of the 1000 games against RMHCPlayer.
+MCTSPlayer won 80.0% of the 1000 games against OSLA.
+
+Random got 2.00 points. Random won 0.2% of the 1000 games of the tournament. Random won 0.2% of the 1000 games it played during the tournament.
+Random won 0.2% of the 1000 games against MCTSPlayer.
+Random won 0.2% of the 1000 games against RMHCPlayer.
+Random won 0.2% of the 1000 games against OSLA.
+
+RMHCPlayer got 26.00 points. RMHCPlayer won 2.6% of the 1000 games of the tournament. RMHCPlayer won 2.6% of the 1000 games it played during the tournament.
+RMHCPlayer won 2.6% of the 1000 games against MCTSPlayer.
+RMHCPlayer won 2.6% of the 1000 games against Random.
+RMHCPlayer won 2.6% of the 1000 games against OSLA.
+
+OSLA got 172.00 points. OSLA won 17.2% of the 1000 games of the tournament. OSLA won 17.2% of the 1000 games it played during the tournament.
+OSLA won 17.2% of the 1000 games against MCTSPlayer.
+OSLA won 17.2% of the 1000 games against Random.
+OSLA won 17.2% of the 1000 games against RMHCPlayer.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.80 +/- 0.01	Mean Ordinal 1.24 +/- 0.01
+OSLA: Win rate 0.17 +/- 0.00	Mean Ordinal 1.93 +/- 0.01
+RMHCPlayer: Win rate 0.03 +/- 0.00	Mean Ordinal 2.41 +/- 0.01
+Random: Win rate 0.00 +/- 0.00	Mean Ordinal 2.64 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+MCTSPlayer got 1000.00 points. MCTSPlayer won 100.0% of the 1000 games of the tournament. MCTSPlayer won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.25 +/- 0.00	Mean Ordinal 2.14 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+MCTSPlayer got 1000.00 points. MCTSPlayer won 100.0% of the 1000 games of the tournament. MCTSPlayer won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+MCTSPlayer: Win rate 0.25 +/- 0.00	Mean Ordinal 2.16 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+Random got 1000.00 points. Random won 76.6% of the 1000 games of the tournament. Random won 19.2% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+Random: Win rate 0.25 +/- 0.00	Mean Ordinal 1.84 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+Random got 1000.00 points. Random won 76.3% of the 1000 games of the tournament. Random won 19.1% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+Random: Win rate 0.25 +/- 0.00	Mean Ordinal 1.83 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 10, Mode: SELF_PLAY
+PropertyOnlyMCTS got 3.00 points. PropertyOnlyMCTS won 30.0% of the 10 games of the tournament. PropertyOnlyMCTS won 30.0% of the 10 games it played during the tournament.
+PropertyOnlyMCTS won 30.0% of the 10 games against PropertyBankMCTS.
+PropertyOnlyMCTS won 30.0% of the 10 games against BasicAllMCTS.
+PropertyOnlyMCTS won 30.0% of the 10 games against CompleteMCTS.
+
+PropertyBankMCTS got 2.00 points. PropertyBankMCTS won 20.0% of the 10 games of the tournament. PropertyBankMCTS won 20.0% of the 10 games it played during the tournament.
+PropertyBankMCTS won 20.0% of the 10 games against PropertyOnlyMCTS.
+PropertyBankMCTS won 20.0% of the 10 games against BasicAllMCTS.
+PropertyBankMCTS won 20.0% of the 10 games against CompleteMCTS.
+
+BasicAllMCTS got 4.00 points. BasicAllMCTS won 40.0% of the 10 games of the tournament. BasicAllMCTS won 40.0% of the 10 games it played during the tournament.
+BasicAllMCTS won 40.0% of the 10 games against PropertyOnlyMCTS.
+BasicAllMCTS won 40.0% of the 10 games against PropertyBankMCTS.
+BasicAllMCTS won 40.0% of the 10 games against CompleteMCTS.
+
+CompleteMCTS got 1.00 points. CompleteMCTS won 10.0% of the 10 games of the tournament. CompleteMCTS won 10.0% of the 10 games it played during the tournament.
+CompleteMCTS won 10.0% of the 10 games against PropertyOnlyMCTS.
+CompleteMCTS won 10.0% of the 10 games against PropertyBankMCTS.
+CompleteMCTS won 10.0% of the 10 games against BasicAllMCTS.
+
+---- Ranking ---- 
+BasicAllMCTS: Win rate 0.40 +/- 0.08	Mean Ordinal 2.10 +/- 0.34
+PropertyOnlyMCTS: Win rate 0.30 +/- 0.07	Mean Ordinal 2.10 +/- 0.28
+PropertyBankMCTS: Win rate 0.20 +/- 0.05	Mean Ordinal 2.30 +/- 0.32
+CompleteMCTS: Win rate 0.10 +/- 0.03	Mean Ordinal 2.40 +/- 0.27
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 262.00 points. PropertyOnlyMCTS won 26.2% of the 1000 games of the tournament. PropertyOnlyMCTS won 26.2% of the 1000 games it played during the tournament.
+PropertyOnlyMCTS won 26.2% of the 1000 games against PropertyBankMCTS.
+PropertyOnlyMCTS won 26.2% of the 1000 games against BasicAllMCTS.
+PropertyOnlyMCTS won 26.2% of the 1000 games against CompleteMCTS.
+
+PropertyBankMCTS got 258.00 points. PropertyBankMCTS won 25.8% of the 1000 games of the tournament. PropertyBankMCTS won 25.8% of the 1000 games it played during the tournament.
+PropertyBankMCTS won 25.8% of the 1000 games against PropertyOnlyMCTS.
+PropertyBankMCTS won 25.8% of the 1000 games against BasicAllMCTS.
+PropertyBankMCTS won 25.8% of the 1000 games against CompleteMCTS.
+
+BasicAllMCTS got 227.00 points. BasicAllMCTS won 22.7% of the 1000 games of the tournament. BasicAllMCTS won 22.7% of the 1000 games it played during the tournament.
+BasicAllMCTS won 22.7% of the 1000 games against PropertyOnlyMCTS.
+BasicAllMCTS won 22.7% of the 1000 games against PropertyBankMCTS.
+BasicAllMCTS won 22.7% of the 1000 games against CompleteMCTS.
+
+CompleteMCTS got 253.00 points. CompleteMCTS won 25.3% of the 1000 games of the tournament. CompleteMCTS won 25.3% of the 1000 games it played during the tournament.
+CompleteMCTS won 25.3% of the 1000 games against PropertyOnlyMCTS.
+CompleteMCTS won 25.3% of the 1000 games against PropertyBankMCTS.
+CompleteMCTS won 25.3% of the 1000 games against BasicAllMCTS.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.26 +/- 0.01	Mean Ordinal 2.17 +/- 0.03
+PropertyBankMCTS: Win rate 0.26 +/- 0.01	Mean Ordinal 2.18 +/- 0.03
+CompleteMCTS: Win rate 0.25 +/- 0.01	Mean Ordinal 2.16 +/- 0.03
+BasicAllMCTS: Win rate 0.23 +/- 0.01	Mean Ordinal 2.22 +/- 0.03
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyOSLA got 359.00 points. PropertyOnlyOSLA won 35.9% of the 1000 games of the tournament. PropertyOnlyOSLA won 35.9% of the 1000 games it played during the tournament.
+PropertyOnlyOSLA won 35.9% of the 1000 games against PropertyBankOSLA.
+PropertyOnlyOSLA won 35.9% of the 1000 games against BasicAllOSLA.
+PropertyOnlyOSLA won 35.9% of the 1000 games against CompleteOSLA.
+
+PropertyBankOSLA got 140.00 points. PropertyBankOSLA won 14.0% of the 1000 games of the tournament. PropertyBankOSLA won 14.0% of the 1000 games it played during the tournament.
+PropertyBankOSLA won 14.0% of the 1000 games against PropertyOnlyOSLA.
+PropertyBankOSLA won 14.0% of the 1000 games against BasicAllOSLA.
+PropertyBankOSLA won 14.0% of the 1000 games against CompleteOSLA.
+
+BasicAllOSLA got 169.00 points. BasicAllOSLA won 16.9% of the 1000 games of the tournament. BasicAllOSLA won 16.9% of the 1000 games it played during the tournament.
+BasicAllOSLA won 16.9% of the 1000 games against PropertyOnlyOSLA.
+BasicAllOSLA won 16.9% of the 1000 games against PropertyBankOSLA.
+BasicAllOSLA won 16.9% of the 1000 games against CompleteOSLA.
+
+CompleteOSLA got 332.00 points. CompleteOSLA won 33.2% of the 1000 games of the tournament. CompleteOSLA won 33.2% of the 1000 games it played during the tournament.
+CompleteOSLA won 33.2% of the 1000 games against PropertyOnlyOSLA.
+CompleteOSLA won 33.2% of the 1000 games against PropertyBankOSLA.
+CompleteOSLA won 33.2% of the 1000 games against BasicAllOSLA.
+
+---- Ranking ---- 
+PropertyOnlyOSLA: Win rate 0.36 +/- 0.01	Mean Ordinal 2.02 +/- 0.03
+CompleteOSLA: Win rate 0.33 +/- 0.01	Mean Ordinal 2.03 +/- 0.03
+BasicAllOSLA: Win rate 0.17 +/- 0.00	Mean Ordinal 2.33 +/- 0.02
+PropertyBankOSLA: Win rate 0.14 +/- 0.00	Mean Ordinal 2.45 +/- 0.03
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+Random got 258.75 points. Random won 20.6% of the 1000 games of the tournament. Random won 20.6% of the 1000 games it played during the tournament.
+Random won 20.6% of the 1000 games against Random.
+Random won 20.6% of the 1000 games against Random.
+Random won 20.6% of the 1000 games against Random.
+
+Random got 232.25 points. Random won 17.9% of the 1000 games of the tournament. Random won 17.9% of the 1000 games it played during the tournament.
+Random won 17.9% of the 1000 games against Random.
+Random won 17.9% of the 1000 games against Random.
+Random won 17.9% of the 1000 games against Random.
+
+Random got 265.25 points. Random won 21.2% of the 1000 games of the tournament. Random won 21.2% of the 1000 games it played during the tournament.
+Random won 21.2% of the 1000 games against Random.
+Random won 21.2% of the 1000 games against Random.
+Random won 21.2% of the 1000 games against Random.
+
+Random got 243.75 points. Random won 19.1% of the 1000 games of the tournament. Random won 19.1% of the 1000 games it played during the tournament.
+Random won 19.1% of the 1000 games against Random.
+Random won 19.1% of the 1000 games against Random.
+Random won 19.1% of the 1000 games against Random.
+
+---- Ranking ---- 
+Random: Win rate 0.27 +/- 0.00	Mean Ordinal 1.84 +/- 0.02
+Random: Win rate 0.26 +/- 0.00	Mean Ordinal 1.83 +/- 0.02
+Random: Win rate 0.24 +/- 0.00	Mean Ordinal 1.87 +/- 0.02
+Random: Win rate 0.23 +/- 0.00	Mean Ordinal 1.92 +/- 0.02
+
+Game: MonopolyDeal, Players: 2, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 games of the tournament. PropertyOnlyMCTS won 50.0% of the 2000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.50 +/- 0.01	Mean Ordinal 1.50 +/- 0.01
+
+Game: MonopolyDeal, Players: 3, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 games of the tournament. PropertyOnlyMCTS won 33.3% of the 3000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.33 +/- 0.00	Mean Ordinal 1.86 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 100.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.16 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 68.5% of the 1000 games of the tournament. PropertyOnlyMCTS won 17.1% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 1.84 +/- 0.02
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 100.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.20 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 97.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 24.3% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.17 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 100.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.21 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.19 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.1% of the 1000 games of the tournament. PropertyOnlyMCTS won 24.8% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 1.95 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+Random got 1000.00 points. Random won 78.2% of the 1000 games of the tournament. Random won 19.6% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+Random: Win rate 0.25 +/- 0.00	Mean Ordinal 1.86 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+MCTSPlayer got 315.00 points. MCTSPlayer won 31.5% of the 1000 games of the tournament. MCTSPlayer won 31.5% of the 1000 games it played during the tournament.
+MCTSPlayer won 31.5% of the 1000 games against OSLA.
+MCTSPlayer won 31.5% of the 1000 games against PropertyOnlyMCTS.
+MCTSPlayer won 31.5% of the 1000 games against PropertyOnlyOSLA.
+
+OSLA got 115.50 points. OSLA won 11.5% of the 1000 games of the tournament. OSLA won 11.5% of the 1000 games it played during the tournament.
+OSLA won 11.5% of the 1000 games against MCTSPlayer.
+OSLA won 11.5% of the 1000 games against PropertyOnlyMCTS.
+OSLA won 11.5% of the 1000 games against PropertyOnlyOSLA.
+
+PropertyOnlyMCTS got 460.50 points. PropertyOnlyMCTS won 46.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 46.0% of the 1000 games it played during the tournament.
+PropertyOnlyMCTS won 46.0% of the 1000 games against MCTSPlayer.
+PropertyOnlyMCTS won 46.0% of the 1000 games against OSLA.
+PropertyOnlyMCTS won 46.0% of the 1000 games against PropertyOnlyOSLA.
+
+PropertyOnlyOSLA got 109.00 points. PropertyOnlyOSLA won 10.9% of the 1000 games of the tournament. PropertyOnlyOSLA won 10.9% of the 1000 games it played during the tournament.
+PropertyOnlyOSLA won 10.9% of the 1000 games against MCTSPlayer.
+PropertyOnlyOSLA won 10.9% of the 1000 games against OSLA.
+PropertyOnlyOSLA won 10.9% of the 1000 games against PropertyOnlyMCTS.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.46 +/- 0.01	Mean Ordinal 1.75 +/- 0.02
+MCTSPlayer: Win rate 0.32 +/- 0.01	Mean Ordinal 2.04 +/- 0.03
+OSLA: Win rate 0.12 +/- 0.00	Mean Ordinal 2.39 +/- 0.02
+PropertyOnlyOSLA: Win rate 0.11 +/- 0.00	Mean Ordinal 2.46 +/- 0.02
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 100.0% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.20 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.8% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.19 +/- 0.01
+
+Game: MonopolyDeal, Players: 4, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 games of the tournament. PropertyOnlyMCTS won 25.0% of the 4000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.18 +/- 0.01
+

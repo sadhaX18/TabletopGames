@@ -9,6 +9,7 @@ import evaluation.tournaments.RandomRRTournament;
 import evaluation.tournaments.RoundRobinTournament;
 import evaluation.tournaments.SkillGrid;
 import games.GameType;
+import games.monopolydeal.MonopolyDealHeuristic;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -96,15 +97,19 @@ public class RunGames implements IGameRunner {
         if (!runGames.config.get(playerDirectory).equals("")) {
             agents.addAll(PlayerFactory.createPlayers((String) runGames.config.get(playerDirectory)));
         } else {
-            agents.add(new MCTSPlayer());
+//            agents.add(new MCTSPlayer());
 //            agents.add(new BasicMCTSPlayer());
-            agents.add(new RandomPlayer());
-            agents.add(new RMHCPlayer());
-//            MCTSParams params = new MCTSParams();
+//            agents.add(new RandomPlayer());
+//            agents.add(new RandomPlayer());
+//            agents.add(new RandomPlayer());
+//            agents.add(new RandomPlayer());
+//            agents.add(new RMHCPlayer());
+            MCTSParams params = new MCTSParams();
 //            params.budget = 4;
 //            params.rolloutLength = 10;
 //            params.opponentTreePolicy = OneTree;
-//            params.heuristic = new players.heuristics.WinPlusHeuristic(1);
+
+
 //            params.K = 100;
 //            params.exploreEpsilon = 0.1;
 //            params.treePolicy = UCB;
@@ -121,9 +126,26 @@ public class RunGames implements IGameRunner {
 //            params.maintainMasterState = false;
 //            params.maxTreeDepth = 10;
 //            params.rolloutTermination = MCTSEnums.RolloutTermination.END_TURN;
-//            agents.add(new MCTSPlayer(params));
+
+//            agents.add(new MCTSPlayer());
 //            agents.add(new OSLAPlayer());
-            agents.add(new OSLAPlayer());
+
+            params.heuristic = new MonopolyDealHeuristic(1);
+            agents.add(new MCTSPlayer(params,"PropertyOnlyMCTS"));
+//
+//            params.heuristic = new MonopolyDealHeuristic(2);
+//            agents.add(new MCTSPlayer(params,"PropertyBankMCTS"));
+//
+//            params.heuristic = new MonopolyDealHeuristic(3);
+//            agents.add(new MCTSPlayer(params,"BasicAllMCTS"));
+//
+//            params.heuristic = new MonopolyDealHeuristic(4);
+//            agents.add(new MCTSPlayer(params,"CompleteMCTS"));
+//            agents.add(new OSLAPlayer());
+//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(1),"PropertyOnlyOSLA" ));
+//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(2),"PropertyBankOSLA" ));
+//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(3),"BasicAllOSLA" ));
+//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(4),"CompleteOSLA" ));
 //            agents.add(new OSLAPlayer());
         }
         runGames.agents = agents;
