@@ -72,21 +72,54 @@ public class RunGames implements IGameRunner {
         RunGames runGames = new RunGames();
         runGames.config = parseConfig(args, Usage.RunGames);
 
-        String setupFile = runGames.config.getOrDefault(RunArg.config, "").toString();
-        if (!setupFile.equals("")) {
-            // Read from file instead
-            try {
-                FileReader reader = new FileReader(setupFile);
-                JSONParser parser = new JSONParser();
-                JSONObject json = (JSONObject) parser.parse(reader);
-                runGames.config = parseConfig(json, Usage.RunGames);
-            } catch (FileNotFoundException ignored) {
-                throw new AssertionError("Config file not found : " + setupFile);
-                //    parseConfig(runGames, args);
-            } catch (IOException | ParseException e) {
-                throw new RuntimeException(e);
+        String setupDir = runGames.config.getOrDefault(configDirectory, "").toString();
+        if (!setupDir.isEmpty()) {
+            // Iterate through the files in this directory
+            File dir = new File(setupDir);
+            if (dir.isDirectory()) {
+                for (File file : Objects.requireNonNull(dir.listFiles())) {
+                    if (file.isFile() && file.getName().endsWith(".json")) {
+                        try {
+                            FileReader reader = new FileReader(file);
+                            JSONParser parser = new JSONParser();
+                            JSONObject json = (JSONObject) parser.parse(reader);
+                            runGames.config = parseConfig(json, Usage.RunGames);
+                            if ((boolean)runGames.config.get(verbose)) {
+                                System.out.println("\n\nRunning with config from " + file.getName() + "\n");
+                            }
+                            parseArgs(runGames);
+                        } catch (IOException | ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             }
+        } else {
+            String setupFile = runGames.config.getOrDefault(RunArg.config, "").toString();
+            if (!setupFile.isEmpty()) {
+                // Read from file instead
+                try {
+                    FileReader reader = new FileReader(setupFile);
+                    JSONParser parser = new JSONParser();
+                    JSONObject json = (JSONObject) parser.parse(reader);
+                    runGames.config = parseConfig(json, Usage.RunGames);
+
+                    if ((boolean)runGames.config.get(verbose)) {
+                        System.out.println("\n\nRunning with config from " + setupFile + "\n");
+                    }
+                } catch (FileNotFoundException ignored) {
+                    throw new AssertionError("Config file not found : " + setupFile);
+                    //    parseConfig(runGames, args);
+                } catch (IOException | ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            parseArgs(runGames);
         }
+    }
+
+    private static void parseArgs(RunGames runGames) {
         runGames.initialiseGamesAndPlayerCount();
         if (!runGames.config.get(RunArg.gameParams).equals("") && runGames.gamesAndPlayerCounts.keySet().size() > 1)
             throw new IllegalArgumentException("Cannot yet provide a gameParams argument if running multiple games");
@@ -97,56 +130,10 @@ public class RunGames implements IGameRunner {
         if (!runGames.config.get(playerDirectory).equals("")) {
             agents.addAll(PlayerFactory.createPlayers((String) runGames.config.get(playerDirectory)));
         } else {
-//            agents.add(new MCTSPlayer());
-//            agents.add(new BasicMCTSPlayer());
-//            agents.add(new RandomPlayer());
-//            agents.add(new RandomPlayer());
-//            agents.add(new RandomPlayer());
-//            agents.add(new RandomPlayer());
-//            agents.add(new RMHCPlayer());
-            MCTSParams params = new MCTSParams();
-//            params.budget = 4;
-//            params.rolloutLength = 10;
-//            params.opponentTreePolicy = OneTree;
-
-
-//            params.K = 100;
-//            params.exploreEpsilon = 0.1;
-//            params.treePolicy = UCB;
-//            params.rolloutType = RANDOM;
-//            params.maxTreeDepth = 100;
-//            params.paranoid = false;
-//            params.budgetType = BUDGET_TIME;
-//            params.selectionPolicy = SIMPLE;
-//            params.information = Information_Set;
-//            params.epsilon = 1e-6;
-//            params.breakMS = 0;
-//            params.rolloutTermination = MCTSEnums.RolloutTermination.DEFAULT;
-//            params.nodesStoreScoreDelta = true;
-//            params.maintainMasterState = false;
-//            params.maxTreeDepth = 10;
-//            params.rolloutTermination = MCTSEnums.RolloutTermination.END_TURN;
-
-//            agents.add(new MCTSPlayer());
-//            agents.add(new OSLAPlayer());
-
-            params.heuristic = new MonopolyDealHeuristic(1);
-            agents.add(new MCTSPlayer(params,"PropertyOnlyMCTS"));
-//
-//            params.heuristic = new MonopolyDealHeuristic(2);
-//            agents.add(new MCTSPlayer(params,"PropertyBankMCTS"));
-//
-//            params.heuristic = new MonopolyDealHeuristic(3);
-//            agents.add(new MCTSPlayer(params,"BasicAllMCTS"));
-//
-//            params.heuristic = new MonopolyDealHeuristic(4);
-//            agents.add(new MCTSPlayer(params,"CompleteMCTS"));
-//            agents.add(new OSLAPlayer());
-//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(1),"PropertyOnlyOSLA" ));
-//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(2),"PropertyBankOSLA" ));
-//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(3),"BasicAllOSLA" ));
-//            agents.add(new OSLAPlayer(new MonopolyDealHeuristic(4),"CompleteOSLA" ));
-//            agents.add(new OSLAPlayer());
+            agents.add(new MCTSPlayer());
+            agents.add(new RandomPlayer());
+            agents.add(new RMHCPlayer());
+            agents.add(new OSLAPlayer());
         }
         runGames.agents = agents;
 

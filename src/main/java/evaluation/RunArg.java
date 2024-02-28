@@ -1,5 +1,6 @@
 package evaluation;
 
+import breeze.linalg.all;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -30,6 +31,10 @@ public enum RunArg {
             "\t If this is specified, then all other arguments are ignored.",
             "",
             new Usage[]{Usage.RunGames, Usage.ParameterSearch, Usage.SkillLadder}),
+    configDirectory("A directory containing several JSON configuration files. \n" +
+            "If this is specified, then all other arguments are ignored.",
+            "",
+            new Usage[]{Usage.RunGames}),
     destDir("The directory to which the results will be written. Defaults to 'metrics/out'.\n" +
             "\t If (and only if) this is being run for multiple games/player counts, then a subdirectory\n" +
             "\t will be created for each game, and then within that for  each player count combination.",

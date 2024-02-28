@@ -3,6 +3,7 @@
   "selfPlay": false,
   "nPlayers": 2,
   "matchups": 1000,
+  "verbose": true,
   "playerDirectory": "json/experiments/sameheuristic/propertybank/players/",
   "listener": "metrics/monopolydeal.json",
   "reportPeriod": 100,
