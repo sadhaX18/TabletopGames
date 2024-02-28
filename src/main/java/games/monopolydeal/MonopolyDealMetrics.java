@@ -255,6 +255,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
         @Override
         protected boolean _run(MetricsGameListener listener, Event e, Map<String, Object> records) {
             records.put("Money", ((MonopolyDealGameState)e.state).getBankValue(e.playerID));
+            records.put("PlayerIdx", e.playerID);
+            records.put("PlayerName", listener.getGame().getPlayers().get(e.playerID).toString());
             return true;
         }
 
@@ -267,6 +269,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
         public Map<String, Class<?>> getColumns(int nPlayersPerGame, Set<String> playerNames) {
             Map<String, Class<?>> columns = new HashMap<>();
             columns.put("Money", Integer.class);
+            columns.put("PlayerIdx", Integer.class);
+            columns.put("PlayerName", Integer.class);
             return columns;
         }
     }
