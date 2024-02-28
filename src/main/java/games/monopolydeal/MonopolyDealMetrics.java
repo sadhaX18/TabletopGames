@@ -7,6 +7,7 @@ import evaluation.metrics.Event;
 import evaluation.metrics.IMetricsCollection;
 import games.monopolydeal.actions.actioncards.*;
 import games.monopolydeal.actions.boardmanagement.AddMoney;
+import games.monopolydeal.actions.informationcontainer.PayCardFrom;
 import games.monopolydeal.cards.CardType;
 
 import java.util.*;
@@ -225,6 +226,11 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                 records.put("ActionTargetPlayer", action.getTarget((MonopolyDealGameState) e.state));
                 return true;
             }
+            else if (e.action instanceof PayCardFrom) {
+                records.put("PayProperty", ((PayCardFrom) e.action).cardType.isProperty ? 1 : 0);
+                records.put("PayMoney", !((PayCardFrom) e.action).cardType.isProperty && !((PayCardFrom) e.action).cardType.isAction ? 1 : 0);
+                records.put("PayAction", ((PayCardFrom) e.action).cardType.isAction ? 1 : 0);
+            }
             return false;
         }
 
@@ -237,6 +243,9 @@ public class MonopolyDealMetrics implements IMetricsCollection {
         public Map<String, Class<?>> getColumns(int nPlayersPerGame, Set<String> playerNames) {
             Map<String, Class<?>> columns = new HashMap<>();
             columns.put("ActionTargetPlayer", Integer.class);
+            columns.put("PayProperty", Integer.class);
+            columns.put("PayMoney", Integer.class);
+            columns.put("PayAction", Integer.class);
             return columns;
         }
     }
