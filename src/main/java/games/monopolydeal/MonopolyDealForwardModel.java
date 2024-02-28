@@ -33,6 +33,8 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
         state.actionsLeft = params.ACTIONS_PER_TURN;
         state.boardModificationsLeft = params.BOARD_MODIFICATIONS_PER_TURN;
 
+        params.setTimeoutRounds(100);
+
         // Add cards to Deck
         for (CardType cT:params.cardsIncludedInGame.keySet()) {
             for(int i =0;i<params.cardsIncludedInGame.get(cT);i++){

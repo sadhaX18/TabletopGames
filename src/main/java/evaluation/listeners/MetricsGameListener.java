@@ -134,6 +134,7 @@ public class MetricsGameListener implements IGameListener {
             // We also create raw data files for groups of metrics responding to the same event
             if (reportTypes.contains(RawDataPerEvent)) {
                 for (IGameEvent event : eventsOfInterest) {
+                    System.out.println("Reporting event: " + event);
                     List<AbstractMetric> eventMetrics = new ArrayList<>();
                     for (AbstractMetric metric : metrics.values()) {
                         if (metric.listens(event)) {

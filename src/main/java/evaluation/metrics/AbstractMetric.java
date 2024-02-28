@@ -202,6 +202,9 @@ public abstract class AbstractMetric {
      */
     public void report(String folderName, List<IDataLogger.ReportType> reportTypes, List<IDataLogger.ReportDestination> reportDestinations)
     {
+        System.out.println("Reporting " + getName() + " metric data to " + reportDestinations.toString()
+                + " (report types: " + reportTypes.toString() + ") in " + folderName + " folder.");
+
         //DataProcessor with compatibility assertion:
         IDataProcessor dataProcessor = getDataProcessor();
         assert dataProcessor.getClass().isAssignableFrom(dataLogger.getDefaultProcessor().getClass()) :

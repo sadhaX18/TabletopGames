@@ -131,6 +131,7 @@ public abstract class StandardForwardModel extends AbstractForwardModel {
         } else if (gs.getGameParameters().timeoutRounds != -1 && gs.roundCounter == gs.getGameParameters().timeoutRounds) {
             endGame(gs);
             // then we override the Result to be Timeout
+            if (gs.getCoreGameParameters().verbose) System.out.println("Game ended due to timeout");
             gs.setGameStatus(TIMEOUT);
             Arrays.fill(gs.playerResults, TIMEOUT);
         } else {

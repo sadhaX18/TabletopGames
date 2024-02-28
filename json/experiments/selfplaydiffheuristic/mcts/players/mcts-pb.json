@@ -1,8 +1,8 @@
 {
 	"class" : "players.mcts.MCTSParams",
 	"K" : 1.0,
-	"rolloutLength" : 0,
-	"maxTreeDepth" : 50,
+	"rolloutLength" : 50,
+	"maxTreeDepth" : 30,
 	"treePolicy" : "UCB",
 	"opponentTreePolicy" : "OneTree",
 	"selectionPolicy" : "SIMPLE",
@@ -11,7 +11,7 @@
 	"expansionPolicy" : "RANDOM",
 	"epsilon" : 1e-6,
 	"budgetType" : "BUDGET_TIME",
-	"budget" : 40,
+	"budget" : 100,
 	"breakMS" : 0,
 	"heuristic" : {
 		"class" : "games.monopolydeal.MonopolyDealHeuristic",

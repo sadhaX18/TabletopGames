@@ -4,7 +4,6 @@
     {"enum" : "evaluation.metrics.IDataLogger$ReportDestination", "value" : "ToFile"},
     [
       {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawData"},
-      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawDataPerEvent"},
       {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "Summary"}
     ],
     [
@@ -17,8 +16,8 @@
       {"class": "evaluation.metrics.GameMetrics$ComputationTimes" },
       {"class": "evaluation.metrics.GameMetrics$Decisions" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$GameDuration" },
+      {"class": "games.monopolydeal.MonopolyDealMetrics$CardsUsed" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$FinalHeuristicScore"},
-      {"class": "games.monopolydeal.MonopolyDealMetrics$CardsUsed"},
       {"class": "games.monopolydeal.MonopolyDealMetrics$ActionsTaken"},
       {"class": "games.monopolydeal.MonopolyDealMetrics$Money"},
       {"class": "games.monopolydeal.MonopolyDealMetrics$Interaction"}

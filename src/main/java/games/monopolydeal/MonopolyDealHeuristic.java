@@ -69,95 +69,107 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
 
     @Override
     public double evaluateState(AbstractGameState gs, int playerId) {
-        double[] scores = new double[gs.getNPlayers()];
-        MonopolyDealGameState MDGS = (MonopolyDealGameState) gs;
-        for(int i=0; i<gs.getNPlayers(); i++) scores[i] = playerHeuristicScore(MDGS,playerId);
-        double minScore = -99.0d, maxScore = 99.0d;
-        for(int i=0; i<gs.getNPlayers();i++){
-            if(minScore>scores[i]) minScore = scores[i];
-            if(maxScore<scores[i]) maxScore = scores[i];
+
+        if (gs.isNotTerminal()) {
+
+            double[] scores = new double[gs.getNPlayers()];
+            MonopolyDealGameState MDGS = (MonopolyDealGameState) gs;
+            for (int i = 0; i < gs.getNPlayers(); i++) scores[i] = playerHeuristicScore(MDGS, playerId);
+            double neg = 0;
+            for (int i = 0; i < gs.getNPlayers(); i++) {
+                if (i != playerId) neg += (gs.getGameScore(i) + scores[i]);
+            }
+            return (gs.getGameScore(playerId) + scores[playerId])/2. - neg/(gs.getNPlayers()-1);
+        } else {
+            // The game finished, we can instead return the actual result of the game for the given player.
+            return gs.getPlayerResults()[playerId].value;
         }
-        return ((scores[playerId]-minScore)/(maxScore-minScore)*2.0)-1;
     }
     double playerHeuristicScore(MonopolyDealGameState MDGS, int playerID){
         switch (HEURISTIC_TYPE){
             case PROPERTYONLY:
                 return getPropertyValue(MDGS, playerID);
             case PROPERTYBANK:
-                return getBankValue(MDGS, playerID) + getPropertyValue(MDGS, playerID);
+                return (getBankValue(MDGS, playerID) + getPropertyValue(MDGS, playerID))/2.;
             case PROPERTYHAND:
-                return getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID);
+                return (getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID))/2.;
             case BASICALL:
-                return getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID) + getBankValue(MDGS, playerID);
+                return (getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID) + getBankValue(MDGS, playerID))/2.;
             case ALL:
-                return getBankValue(MDGS, playerID)/(Math.sqrt((MDGS.getRoundCounter()+1)*1.0))
-                        + getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID);
+                return (getBankValue(MDGS, playerID)/(Math.sqrt((MDGS.getRoundCounter()+1)*1.0))
+                        + getPropertyValue(MDGS, playerID) + getPlayerHandValue(MDGS,playerID))/3;
             default:
                 throw new AssertionError("Not yet implemented");
         }
     }
 
-    private int getPropertyValue(MonopolyDealGameState MDGS, int playerID){
+    private double getPropertyValue(MonopolyDealGameState MDGS, int playerID){
+        double idealPropertyValue = 50.;
         PropertySet[] propertySets = MDGS.getPropertySets(playerID);
         int propertyValue = 0;
         for (PropertySet pSet: propertySets) {
+            int val = setValue.get(pSet.getSetType()) * pSet.getSize();
             if(pSet.isComplete)
-                propertyValue = propertyValue + COMPLETESET_VALUE;
-            propertyValue = propertyValue + (setValue.get(pSet.getSetType()) * pSet.getSize());
+                val += COMPLETESET_VALUE;
+            propertyValue += val;
         }
-        return propertyValue;
+        return Math.min(1.0,propertyValue / idealPropertyValue);
     }
 
-    private int getBankValue(MonopolyDealGameState MDGS, int playerID){
-        Deck<MonopolyDealCard> playerBank = MDGS.getPlayerBank(playerID);
-        int bankValue = 0;
-        for(int i=0;i<playerBank.getSize();i++)
-            bankValue = bankValue + cardValue.get(playerBank.get(i).cardType());
-        return bankValue;
+    private double getBankValue(MonopolyDealGameState MDGS, int playerID){
+        double maxBankValue = 50.;
+//        Deck<MonopolyDealCard> playerBank = MDGS.getPlayerBank(playerID);
+//        int bankValue = 0;
+//        for(int i=0;i<playerBank.getSize();i++)
+//            bankValue += cardValue.get(playerBank.get(i).cardType());
+        return Math.min(1, MDGS.getBankValue(playerID)/maxBankValue);
     }
 
-    private int getPlayerHandValue(MonopolyDealGameState MDGS, int playerID){
+    private double getPlayerHandValue(MonopolyDealGameState MDGS, int playerID){
+        double maxValue = 28;  // 7 max, 4 biggest value
         Deck<MonopolyDealCard> playerHand = MDGS.getPlayerHand(playerID);
         int pHandValue = 0;
         for(int i=0; i<playerHand.getSize(); i++){
+            int value = 0;
             switch (playerHand.get(i).cardType()){
                 case MulticolorWild:
-                    pHandValue = pHandValue + HAND_MULTICOLORWILD;
+                    value = HAND_MULTICOLORWILD;
                     break;
                 case SlyDeal:
-                    pHandValue = pHandValue + HAND_SLYDEAL;
+                    value = HAND_SLYDEAL;
                     break;
                 case ForcedDeal:
-                    pHandValue = pHandValue + HAND_FORCEDDEAL;
+                    value = HAND_FORCEDDEAL;
                     break;
                 case DebtCollector:
-                    pHandValue = pHandValue + HAND_DEBTCOLLECTOR;
+                    value =  HAND_DEBTCOLLECTOR;
                     break;
                 case ItsMyBirthday:
-                    pHandValue = pHandValue + HAND_ITSMYBIRTHDAY;
+                    value = HAND_ITSMYBIRTHDAY;
                     break;
                 case DealBreaker:
-                    pHandValue = pHandValue + HAND_DEALBREAKER;
+                    value = HAND_DEALBREAKER;
                     break;
                 case JustSayNo:
-                    pHandValue = pHandValue + HAND_JUSTSAYNO;
+                    value = HAND_JUSTSAYNO;
                     break;
                 case MulticolorRent:
-                    pHandValue = pHandValue + HAND_MULTICOLORRENT;
+                    value = HAND_MULTICOLORRENT;
                     break;
                 case BrownLightBlueRent:
                 case PinkOrangeRent:
                 case RedYellowRent:
                 case GreenBlueRent:
                 case RailRoadUtilityRent:
-                    pHandValue = pHandValue + HAND_PROPERTYRENT;
+                    value = HAND_PROPERTYRENT;
                     break;
                 default:
                     break;
 
             }
+            pHandValue += value;
         }
-        return pHandValue;
+        return Math.min(1.0, pHandValue/maxValue);
     }
     private void insertValues(){
         // Money values
