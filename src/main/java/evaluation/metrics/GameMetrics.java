@@ -303,6 +303,7 @@ public class GameMetrics implements IMetricsCollection {
 
             records.put("Player-" + e.playerID, e.action == null ? null : e.action.toString());
             records.put(currentPlayer.toString(), e.action == null ? null : e.action.toString());
+            records.put("TurnOwner", e.state.getTurnOwner());
             records.put("Size-" + currentPlayer, size);
 
             records.put("Actions Played", e.action == null ? null : e.action.toString());
@@ -332,6 +333,7 @@ public class GameMetrics implements IMetricsCollection {
             columns.put("Actions Played", String.class);
             columns.put("Actions Played Description", String.class);
             columns.put("Action Space Size", Integer.class);
+            columns.put("TurnOwner", Integer.class);
             return columns;
         }
     }

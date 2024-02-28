@@ -2,7 +2,7 @@
   "game": "MonopolyDeal",
   "selfPlay": false,
   "nPlayers": 2,
-  "matchups": 10,
+  "matchups": 5,
   "listener": "metrics/monopolydeal.json",
   "reportPeriod": 100
 }

@@ -35,7 +35,7 @@ import java.util.Objects;
  * </ol>
  * </p>
  */
-public class PropertyRentAction extends AbstractAction implements IExtendedSequence {
+public class PropertyRentAction extends AbstractAction implements IExtendedSequence, IActionCard {
 
     // The extended sequence usually keeps record of the player who played this action, to be able to inform the game whose turn it is to make decisions
     final int playerID;
@@ -182,5 +182,9 @@ public class PropertyRentAction extends AbstractAction implements IExtendedSeque
     @Override
     public String getString(AbstractGameState gameState) {
         return toString();
+    }
+
+    public int getTarget(MonopolyDealGameState gs) {
+        return -1;  //all players
     }
 }

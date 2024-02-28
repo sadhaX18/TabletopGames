@@ -1,0 +1,7 @@
+{
+	"class":"players.simple.OSLAHeuristic",
+	"heuristic" : {
+		"class" : "games.monopolydeal.MonopolyDealHeuristic",
+		"HEURISTIC_TYPE" : "PROPERTYHAND"
+	}
+}

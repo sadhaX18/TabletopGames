@@ -18,6 +18,8 @@
       {"class": "evaluation.metrics.GameMetrics$Decisions" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$GameDuration" },
       {"class": "games.monopolydeal.MonopolyDealMetrics$FinalHeuristicScore"},
-      {"class": "games.monopolydeal.MonopolyDealMetrics$ActionsTaken"}
+      {"class": "games.monopolydeal.MonopolyDealMetrics$ActionsTaken"},
+      {"class": "games.monopolydeal.MonopolyDealMetrics$Money"},
+      {"class": "games.monopolydeal.MonopolyDealMetrics$Interaction"}
     ]]
 }

@@ -11,8 +11,7 @@ import games.monopolydeal.cards.CardType;
 
 import java.util.*;
 
-import static evaluation.metrics.Event.GameEvent.ACTION_CHOSEN;
-import static evaluation.metrics.Event.GameEvent.GAME_OVER;
+import static evaluation.metrics.Event.GameEvent.*;
 
 public class MonopolyDealMetrics implements IMetricsCollection {
     public static class GameDuration extends AbstractMetric {
@@ -37,13 +36,15 @@ public class MonopolyDealMetrics implements IMetricsCollection {
 
         @Override
         protected boolean _run(MetricsGameListener listener, Event e, Map<String, Object> records) {
-            if (ACTION_CHOSEN.equals(e.type)) {
+            if (ACTION_CHOSEN == e.type) {
                 records.put("ActionsTaken", e.action.toString());
                 records.put("PlayerID", e.playerID);
+                records.put("TurnOwner", e.state.getTurnOwner());
             }
-            else if(GAME_OVER.equals(e.type)){
+            else if(GAME_OVER == e.type){
                 if(e.state.getWinners().isEmpty()){return true;}
                 records.put("Winner",e.state.getWinners().iterator().next());
+                records.put("FirstPlayer",e.state.getFirstPlayer());
             }
             return true;
         }
@@ -59,6 +60,8 @@ public class MonopolyDealMetrics implements IMetricsCollection {
             columns.put("ActionsTaken", String.class);
             columns.put("PlayerID", Integer.class);
             columns.put("Winner", Integer.class);
+            columns.put("TurnOwner", Integer.class);
+            columns.put("FirstPlayer", Integer.class);
             return columns;
         }
     }
@@ -209,6 +212,52 @@ public class MonopolyDealMetrics implements IMetricsCollection {
                 columns.put("Player-" + i, Double.class);
                 columns.put("PlayerName-" + i, String.class);
             }
+            return columns;
+        }
+    }
+
+    public static class Interaction extends AbstractMetric {
+
+        @Override
+        protected boolean _run(MetricsGameListener listener, Event e, Map<String, Object> records) {
+            if (e.action instanceof IActionCard) {
+                IActionCard action = (IActionCard) e.action;
+                records.put("ActionTargetPlayer", action.getTarget((MonopolyDealGameState) e.state));
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Set<IGameEvent> getDefaultEventTypes() {
+            return Collections.singleton(ACTION_CHOSEN);
+        }
+
+        @Override
+        public Map<String, Class<?>> getColumns(int nPlayersPerGame, Set<String> playerNames) {
+            Map<String, Class<?>> columns = new HashMap<>();
+            columns.put("ActionTargetPlayer", Integer.class);
+            return columns;
+        }
+    }
+
+    public static class Money extends AbstractMetric {
+
+        @Override
+        protected boolean _run(MetricsGameListener listener, Event e, Map<String, Object> records) {
+            records.put("Money", ((MonopolyDealGameState)e.state).getBankValue(e.playerID));
+            return true;
+        }
+
+        @Override
+        public Set<IGameEvent> getDefaultEventTypes() {
+            return Collections.singleton(TURN_OVER);
+        }
+
+        @Override
+        public Map<String, Class<?>> getColumns(int nPlayersPerGame, Set<String> playerNames) {
+            Map<String, Class<?>> columns = new HashMap<>();
+            columns.put("Money", Integer.class);
             return columns;
         }
     }

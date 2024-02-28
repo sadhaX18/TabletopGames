@@ -1,0 +1,10 @@
+{
+  "game": "MonopolyDeal",
+  "selfPlay": false,
+  "nPlayers": 2,
+  "matchups": 1000,
+  "playerDirectory": "json/experiments/sameheuristic/basicall/players/",
+  "listener": "metrics/monopolydeal.json",
+  "reportPeriod": 100,
+  "destDir": "json/experiments/sameheuristic/basicall/results/"
+}

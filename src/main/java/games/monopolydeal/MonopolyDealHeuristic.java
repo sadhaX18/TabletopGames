@@ -3,7 +3,6 @@ package games.monopolydeal;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Deck;
-import core.interfaces.IGamePhase;
 import core.interfaces.IStateHeuristic;
 import evaluation.optimisation.TunableParameters;
 import games.monopolydeal.cards.CardType;
@@ -55,81 +54,14 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
 
     public MonopolyDealHeuristic(int type){
         this();
-        switch(type){
-            case 1:
-                HEURISTIC_TYPE = PROPERTYONLY;
-                break;
-            case 2:
-                HEURISTIC_TYPE = PROPERTYBANK;
-                break;
-            case 3:
-                HEURISTIC_TYPE = BASICALL;
-                break;
-            case 4:
-                HEURISTIC_TYPE = ALL;
-                break;
-            default:
-                throw new AssertionError("Not yet implemented");
-        }
+        HEURISTIC_TYPE = MonopolyDealHeuristicType.values()[type];
     }
     public MonopolyDealHeuristic(){
-        addTunableParameter("BANK_VALUE_1", 1, Arrays.asList(1,2));
-        addTunableParameter("BANK_VALUE_2", 2, Arrays.asList(2,3));
-        addTunableParameter("BANK_VALUE_3", 2, Arrays.asList(2,3));
-        addTunableParameter("BANK_VALUE_4", 3, Arrays.asList(2,3,4));
-        addTunableParameter("BANK_VALUE_5", 3, Arrays.asList(2,3,4));
-        addTunableParameter("BANK_VALUE_10", 5, Arrays.asList(3,4,5));
-        addTunableParameter("BROWN_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("LIGHTBLUE_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("PINK_VALUE", 2, Arrays.asList(1,2,3));
-        addTunableParameter("ORANGE_VALUE", 2, Arrays.asList(1,2,3));
-        addTunableParameter("RED_VALUE", 3, Arrays.asList(2,3,4));
-        addTunableParameter("YELLOW_VALUE", 3, Arrays.asList(2,3,4));
-        addTunableParameter("GREEN_VALUE", 4, Arrays.asList(3,4,5));
-        addTunableParameter("BLUE_VALUE", 4, Arrays.asList(3,4,5));
-        addTunableParameter("RAILROAD_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("UTILITY_VALUE", 1, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_SLYDEAL", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_FORCEDDEAL", 2, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_DEBTCOLLECTOR", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_ITSMYBIRTHDAY", 3, Arrays.asList(2,3,4));
-        addTunableParameter("HAND_DEALBREAKER", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HAND_JUSTSAYNO", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HAND_MULTICOLORRENT", 2, Arrays.asList(1,2,3));
-        addTunableParameter("HAND_PROPERTYRENT", 2, Arrays.asList(1,2,3));
-        addTunableParameter("COMPLETESET_VALUE", 5, Arrays.asList(3,5,7));
-        addTunableParameter("HAND_MULTICOLORWILD", 4, Arrays.asList(3,4,5));
-        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(PROPERTYONLY,PROPERTYBANK,PROPERTYHAND,BASICALL, ALL));
+        addTunableParameter("HEURISTIC_TYPE",ALL,Arrays.asList(MonopolyDealHeuristicType.values()));
         insertValues();
     }
     @Override
     public void _reset() {
-        BANK_VALUE_1 = (int) getParameterValue("BANK_VALUE_1");
-        BANK_VALUE_2 = (int) getParameterValue("BANK_VALUE_2");
-        BANK_VALUE_3 = (int) getParameterValue("BANK_VALUE_3");
-        BANK_VALUE_4 = (int) getParameterValue("BANK_VALUE_4");
-        BANK_VALUE_5 = (int) getParameterValue("BANK_VALUE_5");
-        BANK_VALUE_10 = (int) getParameterValue("BANK_VALUE_10");
-        BROWN_VALUE = (int) getParameterValue("BROWN_VALUE");
-        LIGHTBLUE_VALUE = (int) getParameterValue("LIGHTBLUE_VALUE");
-        PINK_VALUE = (int) getParameterValue("PINK_VALUE");
-        ORANGE_VALUE = (int) getParameterValue("ORANGE_VALUE");
-        RED_VALUE = (int) getParameterValue("RED_VALUE");
-        YELLOW_VALUE = (int) getParameterValue("YELLOW_VALUE");
-        GREEN_VALUE = (int) getParameterValue("GREEN_VALUE");
-        BLUE_VALUE = (int) getParameterValue("BLUE_VALUE");
-        RAILROAD_VALUE = (int) getParameterValue("RAILROAD_VALUE");
-        UTILITY_VALUE = (int) getParameterValue("UTILITY_VALUE");
-        HAND_SLYDEAL = (int) getParameterValue("HAND_SLYDEAL");
-        HAND_FORCEDDEAL = (int) getParameterValue("HAND_FORCEDDEAL");
-        HAND_DEBTCOLLECTOR = (int) getParameterValue("HAND_DEBTCOLLECTOR");
-        HAND_ITSMYBIRTHDAY = (int) getParameterValue("HAND_ITSMYBIRTHDAY");
-        HAND_DEALBREAKER = (int) getParameterValue("HAND_DEALBREAKER");
-        HAND_JUSTSAYNO = (int) getParameterValue("HAND_JUSTSAYNO");
-        HAND_MULTICOLORRENT = (int) getParameterValue("HAND_MULTICOLORRENT");
-        HAND_PROPERTYRENT = (int) getParameterValue("HAND_PROPERTYRENT");
-        COMPLETESET_VALUE = (int) getParameterValue("COMPLETESET_VALUE");
-        HAND_MULTICOLORWILD = (int) getParameterValue("HAND_MULTICOLORWILD");
         HEURISTIC_TYPE = (MonopolyDealHeuristicType) getParameterValue("HEURISTIC_TYPE");
     }
     HashMap<CardType,Integer> cardValue = new HashMap<>();
@@ -315,10 +247,10 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
     @Override
     public boolean _equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof MonopolyDealHeuristic)) return false;
         if (!super.equals(o)) return false;
-        MonopolyDealHeuristic heuristic = (MonopolyDealHeuristic) o;
-        return BANK_VALUE_1 == heuristic.BANK_VALUE_1 && BANK_VALUE_2 == heuristic.BANK_VALUE_2 && BANK_VALUE_3 == heuristic.BANK_VALUE_3 && BANK_VALUE_4 == heuristic.BANK_VALUE_4 && BANK_VALUE_5 == heuristic.BANK_VALUE_5 && BANK_VALUE_10 == heuristic.BANK_VALUE_10 && BROWN_VALUE == heuristic.BROWN_VALUE && LIGHTBLUE_VALUE == heuristic.LIGHTBLUE_VALUE && PINK_VALUE == heuristic.PINK_VALUE && ORANGE_VALUE == heuristic.ORANGE_VALUE && RED_VALUE == heuristic.RED_VALUE && YELLOW_VALUE == heuristic.YELLOW_VALUE && GREEN_VALUE == heuristic.GREEN_VALUE && BLUE_VALUE == heuristic.BLUE_VALUE && RAILROAD_VALUE == heuristic.RAILROAD_VALUE && UTILITY_VALUE == heuristic.UTILITY_VALUE && COMPLETESET_VALUE == heuristic.COMPLETESET_VALUE && HAND_SLYDEAL == heuristic.HAND_SLYDEAL && HAND_FORCEDDEAL == heuristic.HAND_FORCEDDEAL && HAND_DEBTCOLLECTOR == heuristic.HAND_DEBTCOLLECTOR && HAND_ITSMYBIRTHDAY == heuristic.HAND_ITSMYBIRTHDAY && HAND_DEALBREAKER == heuristic.HAND_DEALBREAKER && HAND_JUSTSAYNO == heuristic.HAND_JUSTSAYNO && HAND_MULTICOLORRENT == heuristic.HAND_MULTICOLORRENT && HAND_PROPERTYRENT == heuristic.HAND_PROPERTYRENT && HAND_MULTICOLORWILD == heuristic.HAND_MULTICOLORWILD && HEURISTIC_TYPE == heuristic.HEURISTIC_TYPE && Objects.equals(cardValue, heuristic.cardValue) && Objects.equals(setValue, heuristic.setValue);
+        MonopolyDealHeuristic that = (MonopolyDealHeuristic) o;
+        return BANK_VALUE_1 == that.BANK_VALUE_1 && BANK_VALUE_2 == that.BANK_VALUE_2 && BANK_VALUE_3 == that.BANK_VALUE_3 && BANK_VALUE_4 == that.BANK_VALUE_4 && BANK_VALUE_5 == that.BANK_VALUE_5 && BANK_VALUE_10 == that.BANK_VALUE_10 && BROWN_VALUE == that.BROWN_VALUE && LIGHTBLUE_VALUE == that.LIGHTBLUE_VALUE && PINK_VALUE == that.PINK_VALUE && ORANGE_VALUE == that.ORANGE_VALUE && RED_VALUE == that.RED_VALUE && YELLOW_VALUE == that.YELLOW_VALUE && GREEN_VALUE == that.GREEN_VALUE && BLUE_VALUE == that.BLUE_VALUE && RAILROAD_VALUE == that.RAILROAD_VALUE && UTILITY_VALUE == that.UTILITY_VALUE && COMPLETESET_VALUE == that.COMPLETESET_VALUE && HAND_SLYDEAL == that.HAND_SLYDEAL && HAND_FORCEDDEAL == that.HAND_FORCEDDEAL && HAND_DEBTCOLLECTOR == that.HAND_DEBTCOLLECTOR && HAND_ITSMYBIRTHDAY == that.HAND_ITSMYBIRTHDAY && HAND_DEALBREAKER == that.HAND_DEALBREAKER && HAND_JUSTSAYNO == that.HAND_JUSTSAYNO && HAND_MULTICOLORRENT == that.HAND_MULTICOLORRENT && HAND_PROPERTYRENT == that.HAND_PROPERTYRENT && HAND_MULTICOLORWILD == that.HAND_MULTICOLORWILD && HEURISTIC_TYPE == that.HEURISTIC_TYPE && Objects.equals(cardValue, that.cardValue) && Objects.equals(setValue, that.setValue);
     }
 
     @Override

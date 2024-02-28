@@ -31,7 +31,7 @@ public class RandomRRTournament extends RoundRobinTournament {
         super(agents, gameToPlay, playersPerGame,  gameParams, tournamentMode, config);
         this.totalMatchups = (int) config.get(RunArg.matchups);
         this.reportPeriod = config.get(RunArg.reportPeriod) == null ? 0 : (int) config.get(RunArg.reportPeriod);
-        long seed = (long) config.get(RunArg.seed);
+        long seed = (int) config.get(RunArg.seed);
         idStream = new PermutationCycler(agents.size(), seed, playersPerGame);
     }
 

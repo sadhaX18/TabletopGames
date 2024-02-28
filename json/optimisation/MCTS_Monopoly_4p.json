@@ -1,0 +1,25 @@
+{
+        "class":"players.mcts.MCTSParams",
+
+        "budget" : 4,
+        "rolloutLength" : 10,
+        "opponentTreePolicy" : "OneTree",
+        "heuristic" : {
+                "class" : "players.heuristics.WinPlusHeuristic"
+        },
+        "K" : 100,
+        "exploreEpsilon" : 0.100,
+        "treePolicy" : "UCB",
+        "rolloutType" : "RANDOM",
+
+        "maxTreeDepth" : 100,
+        "paranoid" : false,
+        "budgetType" : "BUDGET_TIME",
+        "selectionPolicy" : "SIMPLE",
+        "information" : "Information_Set",
+        "epsilon" : 1e-6,
+        "breakMS" : 0,
+        "rolloutTermination" : "DEFAULT",
+        "nodesStoreScoreDelta" :  true,
+        "maintainMasterState" : false
+}

@@ -19,6 +19,14 @@ public class OSLAHeuristic extends TunableParameters {
         _reset();
     }
 
+    public IStateHeuristic getHeuristic() {
+        return heuristic;
+    }
+
+    public int getPlyDepth() {
+        return plyDepth;
+    }
+
     @Override
     protected AbstractParameters _copy() {
         OSLAHeuristic retValue = new OSLAHeuristic();
@@ -29,6 +37,7 @@ public class OSLAHeuristic extends TunableParameters {
 
     @Override
     public void _reset() {
+        heuristic = (IStateHeuristic) getParameterValue("heuristic");
         if (heuristic instanceof TunableParameters) {
             TunableParameters tunableHeuristic = (TunableParameters) heuristic;
             for (String name : tunableHeuristic.getParameterNames()) {

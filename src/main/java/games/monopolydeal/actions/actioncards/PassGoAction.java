@@ -10,7 +10,7 @@ import games.monopolydeal.cards.MonopolyDealCard;
 /**
  * <p>A simple action card which draws 2 cards into a player's hand when played.</p>
  */
-public class PassGoAction extends AbstractAction {
+public class PassGoAction extends AbstractAction implements IActionCard {
     @Override
     public boolean execute(AbstractGameState gs) {
         MonopolyDealGameState MDGS = (MonopolyDealGameState) gs;
@@ -38,5 +38,9 @@ public class PassGoAction extends AbstractAction {
     @Override
     public String getString(AbstractGameState gameState) {
         return toString();
+    }
+
+    public int getTarget(MonopolyDealGameState gs) {
+        return gs.getTurnOwner();
     }
 }
