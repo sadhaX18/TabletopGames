@@ -275,9 +275,7 @@ public class MonopolyDealGameState extends AbstractGameState {
     }
     public void removePropertyFrom(int playerID, CardType cardType, SetType from){
         MonopolyDealCard card = new MonopolyDealCard(cardType);
-        if(card.isPropertyWildCard() || card.cardType()== CardType.House || card.cardType()== CardType.Hotel){
-            card.setUseAs(from);
-        }
+        card.setUseAs(from);
         int indx = getSetIndx(from);
         playerPropertySets[playerID][indx].remove(card);
     }

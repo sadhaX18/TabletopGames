@@ -59,7 +59,7 @@ public class PropertySet extends Deck<MonopolyDealCard> {
     public boolean add(MonopolyDealCard c) {
         if(c.type == CardType.House ) hasHouse = true;
         else if (c.type == CardType.Hotel ) hasHotel = true;
-        else if(getPropertySetSize() >= getSetType().setSize - 1)
+        else if(getPropertySetSize() >= getSetType().setSize-1)
             isComplete = true;
         if(c.isPropertyWildCard())hasWild = true;
         return super.add(c);
@@ -68,7 +68,7 @@ public class PropertySet extends Deck<MonopolyDealCard> {
     public boolean remove(MonopolyDealCard c) {
         if(c.type == CardType.House ) hasHouse = false;
         else if (c.type == CardType.Hotel ) hasHotel = false;
-        if(c.isPropertyCard() && getPropertySetSize() <= getSetType().setSize-1) isComplete = false;
+        if(c.isPropertyCard() && getPropertySetSize() <= getSetType().setSize) isComplete = false;
         if(c.isPropertyWildCard()){
             int wildCount = 0;
             for (MonopolyDealCard dealCard: this.components) {

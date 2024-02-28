@@ -912,3 +912,33 @@ PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 game
 ---- Ranking ---- 
 PropertyOnlyMCTS: Win rate 0.25 +/- 0.00	Mean Ordinal 2.18 +/- 0.01
 
+Game: MonopolyDeal, Players: 3, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.8% of the 1000 games of the tournament. PropertyOnlyMCTS won 33.3% of the 3000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.33 +/- 0.00	Mean Ordinal 1.86 +/- 0.01
+
+Game: MonopolyDeal, Players: 2, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.9% of the 1000 games of the tournament. PropertyOnlyMCTS won 50.0% of the 2000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.50 +/- 0.01	Mean Ordinal 1.50 +/- 0.01
+
+Game: MonopolyDeal, Players: 2, GamesPerMatchup: 1000, Mode: SELF_PLAY
+PropertyOnlyMCTS got 1000.00 points. PropertyOnlyMCTS won 99.8% of the 1000 games of the tournament. PropertyOnlyMCTS won 49.9% of the 2000 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.50 +/- 0.01	Mean Ordinal 1.50 +/- 0.01
+
+Game: MonopolyDeal, Players: 2, GamesPerMatchup: 100, Mode: SELF_PLAY
+PropertyOnlyMCTS got 100.00 points. PropertyOnlyMCTS won 100.0% of the 100 games of the tournament. PropertyOnlyMCTS won 50.0% of the 200 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.50 +/- 0.02	Mean Ordinal 1.50 +/- 0.02
+
+Game: MonopolyDeal, Players: 2, GamesPerMatchup: 100, Mode: SELF_PLAY
+PropertyOnlyMCTS got 100.00 points. PropertyOnlyMCTS won 100.0% of the 100 games of the tournament. PropertyOnlyMCTS won 50.0% of the 200 games it played during the tournament.
+
+---- Ranking ---- 
+PropertyOnlyMCTS: Win rate 0.50 +/- 0.02	Mean Ordinal 1.50 +/- 0.02
+
