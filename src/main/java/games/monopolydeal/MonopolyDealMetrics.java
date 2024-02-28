@@ -270,7 +270,7 @@ public class MonopolyDealMetrics implements IMetricsCollection {
             Map<String, Class<?>> columns = new HashMap<>();
             columns.put("Money", Integer.class);
             columns.put("PlayerIdx", Integer.class);
-            columns.put("PlayerName", Integer.class);
+            columns.put("PlayerName", String.class);
             return columns;
         }
     }
