@@ -4,7 +4,8 @@
     {"enum" : "evaluation.metrics.IDataLogger$ReportDestination", "value" : "ToFile"},
     [
       {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawData"},
-      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawDataPerEvent"}
+      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "RawDataPerEvent"},
+      {"enum" : "evaluation.metrics.IDataLogger$ReportType", "value" : "Summary"}
     ],
     [
       {"class": "evaluation.metrics.GameMetrics$GameScore" },

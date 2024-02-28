@@ -98,7 +98,7 @@ public class MonopolyDealCard extends Card{
     public boolean equals(Object obj) {
         if (obj instanceof MonopolyDealCard) {
             MonopolyDealCard other = (MonopolyDealCard) obj;
-            return other.type == type;
+            return other.type == type && other.useAs == useAs;
         }
         return false;
     }

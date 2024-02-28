@@ -81,7 +81,7 @@ public class ModifyBoard extends AbstractAction implements IExtendedSequence {
         CardType cardType = actionTaken.cardType;
 
         // Debugging
-        if(cardType==CardType.House)
+        if(cardType==CardType.MulticolorWild)
         {
             int i=0;
         }
