@@ -18,6 +18,6 @@
 		"HEURISTIC_TYPE" : "BASICALL"
 	},
 	"opponentHeuristic" : {
-		"class" : "players.heuristics.ScoreHeuristic"
+		"class" : "players.heuristics.LeaderHeuristic"
 	}
 }

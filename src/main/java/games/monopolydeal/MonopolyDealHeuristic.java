@@ -71,7 +71,6 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
     public double evaluateState(AbstractGameState gs, int playerId) {
 
         if (gs.isNotTerminal()) {
-
             double[] scores = new double[gs.getNPlayers()];
             MonopolyDealGameState MDGS = (MonopolyDealGameState) gs;
             for (int i = 0; i < gs.getNPlayers(); i++) scores[i] = playerHeuristicScore(MDGS, playerId);

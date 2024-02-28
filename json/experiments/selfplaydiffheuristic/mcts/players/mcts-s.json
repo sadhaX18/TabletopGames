@@ -14,7 +14,7 @@
 	"budget" : 100,
 	"breakMS" : 0,
 	"heuristic" : {
-		"class" : "players.heuristics.ScoreHeuristic"
+		"class" : "players.heuristics.LeaderHeuristic"
 	},
 	"opponentHeuristic" : {
 		"class" : "players.heuristics.ScoreHeuristic"

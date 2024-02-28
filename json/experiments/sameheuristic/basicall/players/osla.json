@@ -1,6 +1,7 @@
 {
 	"class":"players.simple.OSLAHeuristic",
 	"heuristic" : {
-		"class" : "players.heuristics.ScoreHeuristic"
+		"class" : "games.monopolydeal.MonopolyDealHeuristic",
+		"HEURISTIC_TYPE" : "BASICALL"
 	}
 }
