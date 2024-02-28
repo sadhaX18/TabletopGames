@@ -75,11 +75,14 @@ public class MonopolyDealHeuristic extends TunableParameters implements IStateHe
             double[] scores = new double[gs.getNPlayers()];
             MonopolyDealGameState MDGS = (MonopolyDealGameState) gs;
             for (int i = 0; i < gs.getNPlayers(); i++) scores[i] = playerHeuristicScore(MDGS, playerId);
-            double neg = 0;
+            double maxOther = 0;
             for (int i = 0; i < gs.getNPlayers(); i++) {
-                if (i != playerId) neg += (gs.getGameScore(i) + scores[i]);
+                if (i != playerId) {
+                    double neg = (gs.getGameScore(i) + scores[i])/2.;
+                    if (neg > maxOther) maxOther = neg;
+                }
             }
-            return (gs.getGameScore(playerId) + scores[playerId])/2. - neg/(gs.getNPlayers()-1);
+            return (gs.getGameScore(playerId) + scores[playerId])/2. - maxOther;
         } else {
             // The game finished, we can instead return the actual result of the game for the given player.
             return gs.getPlayerResults()[playerId].value;
