@@ -1,6 +1,6 @@
 {
 	"class":"players.simple.OSLAHeuristic",
-	"opponentHeuristic" : {
-		"class" : "players.heuristics.LeaderHeuristic"
+	"heuristic" : {
+		"class" : "players.heuristics.ScoreHeuristic"
 	}
 }
