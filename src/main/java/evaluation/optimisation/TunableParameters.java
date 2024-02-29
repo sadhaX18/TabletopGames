@@ -105,7 +105,8 @@ public abstract class TunableParameters extends AbstractParameters implements IT
             return retValue;
         }
         if (defaultValue == null) {
-            throw new AssertionError("No default value provided for " + name + " to check JSON validity");
+            return (T) data;
+//            throw new AssertionError("No default value provided for " + name + " to check JSON validity");
         }
         if (data.getClass() == defaultValue.getClass())
             return (T) data;
@@ -211,6 +212,14 @@ public abstract class TunableParameters extends AbstractParameters implements IT
         currentValues.put(name, null);
     }
 
+    public <T> void addTunableParameter(String name, Class<T> classType, List<T> allSettings) {
+        if (!parameterNames.contains(name)) parameterNames.add(name);
+        defaultValues.put(name, null);
+        parameterTypes.put(name, classType);
+        possibleValues.put(name, new ArrayList<>(allSettings));
+        currentValues.put(name, null);
+    }
+
     /**
      * Names all parameters for printing purposes.
      *
@@ -241,6 +250,12 @@ public abstract class TunableParameters extends AbstractParameters implements IT
     public Object getDefaultParameterValue(String parameterName) {
         return defaultValues.get(parameterName);
     }
+
+    public Object getDefaultParameterValueOrClass(String parameterName) {
+        if (defaultValues.get(parameterName) == null) return getParameterTypes().get(parameterName);
+        return defaultValues.get(parameterName);
+    }
+
 
     /**
      * Sets the value of the given parameter.
@@ -310,6 +325,8 @@ public abstract class TunableParameters extends AbstractParameters implements IT
     public Object getParameterValue(String parameterName) {
         return currentValues.get(parameterName);
     }
+
+
 
     /**
      * Retrieve the name of one parameter.

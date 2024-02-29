@@ -1,0 +1,7 @@
+{
+  "class": "games.monopolydeal.MonopolyDealParameters",
+  "focusType": {
+    "enum" : "games.monopolydeal.cards.CardType",
+    "value": "DealBreaker"
+  }
+}

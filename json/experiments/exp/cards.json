@@ -1,0 +1,12 @@
+{
+  "game": "MonopolyDeal",
+  "selfPlay": true,
+  "playerRange": "all",
+  "matchups": 1000,
+  "verbose": true,
+  "playerDirectory": "json/experiments/cards/players/",
+  "listener": "metrics/monopolydeal.json",
+  "reportPeriod": 100,
+  "destDir": "json/experiments/cards/results/",
+  "gameParams": "json/experiments/cards/params.json"
+}
