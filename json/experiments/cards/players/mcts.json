@@ -14,7 +14,8 @@
 	"budget" : 100,
 	"breakMS" : 0,
 	"heuristic" : {
-		"class" : "players.heuristics.ScoreHeuristic"
+		"class" : "games.monopolydeal.MonopolyDealHeuristic",
+		"HEURISTIC_TYPE" : "ALL"
 	},
 	"opponentHeuristic" : {
 		"class" : "players.heuristics.ScoreHeuristic"

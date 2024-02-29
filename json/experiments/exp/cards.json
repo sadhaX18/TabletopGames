@@ -1,7 +1,7 @@
 {
   "game": "MonopolyDeal",
   "selfPlay": true,
-  "playerRange": "all",
+  "nPlayers": 2,
   "matchups": 1000,
   "verbose": true,
   "playerDirectory": "json/experiments/cards/players/",
