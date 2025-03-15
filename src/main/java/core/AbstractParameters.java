@@ -146,6 +146,14 @@ public abstract class AbstractParameters {
     public AbstractParameters copy() {
         AbstractParameters copy = _copy();
         copy.randomSeed = System.currentTimeMillis();
+        copy.timeoutRounds = timeoutRounds;
+        copy.maxRounds = maxRounds;
+        copy.randomSeed = randomSeed;
+        copy.thinkingTimeMins = thinkingTimeMins;
+        copy.incrementActionS = incrementActionS;
+        copy.incrementTurnS = incrementTurnS;
+        copy.incrementRoundS = incrementRoundS;
+        copy.incrementMilestoneS = incrementMilestoneS;
         return copy;
     }
 

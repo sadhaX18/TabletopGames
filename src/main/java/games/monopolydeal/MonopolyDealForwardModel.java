@@ -13,6 +13,8 @@ import games.monopolydeal.cards.MonopolyDealCard;
 
 import java.util.*;
 
+import static core.CoreConstants.VisibilityMode.*;
+
 /**
  * <p>The forward model contains all the game rules and logic. It is mainly responsible for declaring rules for:</p>
  * <ol>
@@ -29,28 +31,38 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
         MonopolyDealGameState state = (MonopolyDealGameState) firstState;
         state._reset();
         state.deckEmpty = false;
-        MonopolyDealParameters params = state.params;
+        MonopolyDealParameters params = (MonopolyDealParameters) state.getGameParameters();
         state.actionsLeft = params.ACTIONS_PER_TURN;
         state.boardModificationsLeft = params.BOARD_MODIFICATIONS_PER_TURN;
+
+        state.drawPile = new Deck<>("Draw",HIDDEN_TO_ALL);
+        state.discardPile = new Deck<>("Discard",VISIBLE_TO_ALL);
 
         params.setTimeoutRounds(100);
 
         // Add cards to Deck
-        for (CardType cT:params.cardsIncludedInGame.keySet()) {
-            for(int i =0;i<params.cardsIncludedInGame.get(cT);i++){
+        for (CardType cT : params.cardsIncludedInGame.keySet()) {
+            for (int i = 0; i < params.cardsIncludedInGame.get(cT); i++) {
                 state.drawPile.add(MonopolyDealCard.create(cT));
             }
         }
         //Shuffle Deck
-        state.drawPile.shuffle(state.rnd);
+        state.drawPile.shuffle(state.getRnd());
+
         //Deal 5 cards to each player
-        for(int i=0;i< state.getNPlayers();i++) {
-            state.drawCard(i,params.INITIAL_DEAL);
+        state.playerBanks.clear();
+        state.playerHands.clear();
+        for (int i = 0; i < state.getNPlayers(); i++) {
+            state.playerHands.add(new Deck<>("Hand P" + (i + 1), VISIBLE_TO_OWNER));
+            state.playerBanks.add(new Deck<>("Bank P" + (i + 1), VISIBLE_TO_ALL));
+            state.initPropertySets(i);
+            state.drawCard(i, params.INITIAL_DEAL);
         }
         state.setGamePhase(MonopolyDealGameState.MonopolyDealGamePhase.Play);
         // Draw cards at the start of the turn
-        state.drawCard(state.getFirstPlayer(),params.DRAWS_PER_TURN);
+        state.drawCard(state.getFirstPlayer(), params.DRAWS_PER_TURN);
     }
+
     @Override
     protected List<AbstractAction> _computeAvailableActions(AbstractGameState gameState) {
         MonopolyDealGameState state = (MonopolyDealGameState) gameState;
@@ -74,9 +86,9 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
                 }
                 return Collections.singletonList(new EndPhase());
             case "Discard":
-                if(state.playerHands[playerID].stream().count()>state.params.HAND_SIZE){
+                if(state.playerHands.get(playerID).getSize() > ((MonopolyDealParameters)state.getGameParameters()).HAND_SIZE){
                     List<AbstractAction> availableActions = new ArrayList<>();
-                    Deck<MonopolyDealCard> playerHand = state.playerHands[playerID];
+                    Deck<MonopolyDealCard> playerHand = state.playerHands.get(playerID);
                     for (int i=0;i<playerHand.getSize();i++) {
                         if(!availableActions.contains(new DiscardCard(playerHand.get(i).cardType(),playerID)))
                             availableActions.add(new DiscardCard(playerHand.get(i).cardType(),playerID));
@@ -98,7 +110,7 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
             switch (state.getGamePhase().toString()) {
                 case "Play":
                     if ((state.actionsLeft < 1 || actionTaken instanceof EndPhase) && !state.isActionInProgress()) {
-                        if (state.playerHands[playerID].getSize() > state.params.HAND_SIZE) {
+                        if (state.playerHands.get(playerID).getSize() >  ((MonopolyDealParameters)state.getGameParameters()).HAND_SIZE) {
                             state.setGamePhase(MonopolyDealGameState.MonopolyDealGamePhase.Discard);
                         } else {
                             if (state.getCurrentPlayer() == state.getNPlayers() - 1) endRound(state);
@@ -108,7 +120,7 @@ public class MonopolyDealForwardModel extends StandardForwardModel {
                     }
                     break;
                 case "Discard":
-                    if (state.playerHands[playerID].getSize() <= state.params.HAND_SIZE) {
+                    if (state.playerHands.get(playerID).getSize() <=  ((MonopolyDealParameters)state.getGameParameters()).HAND_SIZE) {
                         state.setGamePhase(MonopolyDealGameState.MonopolyDealGamePhase.Play);
                         if (state.getCurrentPlayer() == state.getNPlayers() - 1) endRound(state);
                         else endPlayerTurn(currentState);

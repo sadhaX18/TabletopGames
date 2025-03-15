@@ -7,6 +7,10 @@ public class ForwardModelTestsWithMCTS {
 
 
     @Test
+    public void testMonopolyDeal() {
+        new ForwardModelTester("game=MonopolyDeal", "nGames=5", "nPlayers=2", "agentToPlay=json\\players\\gameSpecific\\Battlelore.json");
+    }
+    @Test
     public void testBattleLore() {
         new ForwardModelTester("game=Battlelore", "nGames=1", "nPlayers=2", "agentToPlay=json\\players\\gameSpecific\\Battlelore.json");
     }

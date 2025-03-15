@@ -25,13 +25,10 @@ import static core.CoreConstants.VisibilityMode.*;
  */
 public class MonopolyDealGameState extends AbstractGameState {
 
-    MonopolyDealParameters params;
-    Random rnd;
-
     // GameState members
     // Player Data members
-    Deck<MonopolyDealCard>[] playerHands;
-    Deck<MonopolyDealCard>[] playerBanks;
+    List<Deck<MonopolyDealCard>> playerHands;
+    List<Deck<MonopolyDealCard>> playerBanks;
     PropertySet[][] playerPropertySets;
 
     Deck<MonopolyDealCard> drawPile;
@@ -48,22 +45,13 @@ public class MonopolyDealGameState extends AbstractGameState {
      */
     public MonopolyDealGameState(AbstractParameters gameParameters, int nPlayers) {
         super(gameParameters, nPlayers);
-        rnd = new Random(gameParameters.getRandomSeed());
-        params = (MonopolyDealParameters) gameParameters;
         this._reset();
     }
 
     protected void _reset() {
-        playerHands = new Deck[getNPlayers()];
-        playerBanks = new Deck[getNPlayers()];
+        playerHands = new ArrayList<>();
+        playerBanks = new ArrayList<>();
         playerPropertySets = new PropertySet[getNPlayers()][11];
-        drawPile = new Deck<>("Draw",HIDDEN_TO_ALL);
-        discardPile = new Deck<>("Discard",VISIBLE_TO_ALL);
-        for(int i=0;i<getNPlayers();i++){
-            playerHands[i] = new Deck<>("Hand P" + (i + 1), VISIBLE_TO_OWNER);
-            playerBanks[i] = new Deck<>("Bank P"+(i+1),VISIBLE_TO_ALL);
-            initPropertySets(i);
-        }
     }
 
     /**
@@ -84,8 +72,8 @@ public class MonopolyDealGameState extends AbstractGameState {
     protected List<Component> _getAllComponents() {
         // add all components to the list
         List<Component> components = new ArrayList<>();
-        components.addAll(Arrays.asList(playerHands));
-        components.addAll(Arrays.asList(playerBanks));
+        components.addAll(playerHands);
+        components.addAll(playerBanks);
         for(int i=0;i<getNPlayers();i++){
             components.addAll(Arrays.asList(playerPropertySets[i]));
         }
@@ -113,22 +101,17 @@ public class MonopolyDealGameState extends AbstractGameState {
         // Placeholder to know how many cards each player had for redrawing cards
         int[] playerHandSize = new int[getNPlayers()];
         retValue.drawPile = drawPile.copy();
+        retValue.discardPile = discardPile.copy();
+        retValue.playerHands = new ArrayList<>();
         // Hidden values
         for (int p = 0; p < getNPlayers(); p++) {
-            if (playerId == -1) {
-                // No hidden information
-                retValue.playerHands[p] = playerHands[p].copy();
-
-            } else if (playerId == p) {
-                // Current players hand is visible information
-                retValue.playerHands[p] = playerHands[p].copy();
-            } else{
-                retValue.playerHands[p] = playerHands[p].copy();
-                playerHandSize[p] = retValue.playerHands[p].getSize();
+            retValue.playerHands.add(playerHands.get(p).copy());
+            if (playerId != -1 && getCoreGameParameters().partialObservable && playerId != p) {
+                playerHandSize[p] = retValue.playerHands.get(p).getSize();
 
                 // Adding all hidden cards back to deck
-                retValue.drawPile.add(retValue.playerHands[p]);
-                retValue.playerHands[p].clear();
+                retValue.drawPile.add(retValue.playerHands.get(p));
+                retValue.playerHands.get(p).clear();
             }
         }
         if(playerId != -1) {
@@ -141,13 +124,13 @@ public class MonopolyDealGameState extends AbstractGameState {
             }
         }
         // Completely visible values
+        retValue.playerBanks = new ArrayList<>();
         for(int i=0;i<getNPlayers();i++){
-            retValue.playerBanks[i] = playerBanks[i].copy();
-            for(int j=0;j<11;j++)
+            retValue.playerBanks.add(playerBanks.get(i).copy());
+            for(int j=0;j<11;j++) {
                 retValue.playerPropertySets[i][j] = playerPropertySets[i][j].copy();
+            }
         }
-//        retValue.playerPropertySets = playerPropertySets.clone();
-        retValue.discardPile = discardPile.copy();
         retValue.actionsLeft = actionsLeft;
         retValue.deckEmpty = deckEmpty;
         retValue.boardModificationsLeft = boardModificationsLeft;
@@ -168,7 +151,7 @@ public class MonopolyDealGameState extends AbstractGameState {
                 resetDrawPile();
             }
             if(!deckEmpty)
-                playerHands[playerID].add(drawPile.draw());
+                playerHands.get(playerID).add(drawPile.draw());
         }
     }
     public void resetDrawPile(){
@@ -182,10 +165,11 @@ public class MonopolyDealGameState extends AbstractGameState {
         drawPile.shuffle(rnd);
     }
     public void endTurn() {
+        MonopolyDealParameters params = (MonopolyDealParameters)gameParameters;
         actionsLeft = params.ACTIONS_PER_TURN;
         boardModificationsLeft = params.BOARD_MODIFICATIONS_PER_TURN;
         int nextPlayer = getCurrentPlayer();
-        if(playerHands[nextPlayer].getSize() == 0){
+        if(playerHands.get(nextPlayer).getSize() == 0){
             drawCard(nextPlayer,params.DRAWS_WHEN_EMPTY);
         }
         else{
@@ -194,25 +178,25 @@ public class MonopolyDealGameState extends AbstractGameState {
     }
     public void discardCard(CardType cardType, int playerID) {
         MonopolyDealCard card = new MonopolyDealCard(cardType);
-        playerHands[playerID].remove(card);
+        playerHands.get(playerID).remove(card);
         discardPile.add(card);
     }
     public void addMoney(int playerID, CardType money){
         MonopolyDealCard card = new MonopolyDealCard(money);
-        playerBanks[playerID].add(card);
+        playerBanks.get(playerID).add(card);
     }
     public void removeMoneyFrom(int playerID, CardType money) {
         MonopolyDealCard card = new MonopolyDealCard(money);
-        playerBanks[playerID].remove(card);
+        playerBanks.get(playerID).remove(card);
     }
     public boolean isBoardEmpty(int playerID){
-        if (playerBanks[playerID].getSize() == 0) {
+        if (playerBanks.get(playerID).getSize() == 0) {
             for (PropertySet pSet : playerPropertySets[playerID]) {
                 for (int i=0; i<pSet.getSize(); i++) {
                     if(pSet.get(i).cardType()!= CardType.MulticolorWild) return false;
                 }
             }
-        } else return playerBanks[playerID].getSize() <= 0;
+        } else return playerBanks.get(playerID).getSize() <= 0;
         return true;
     }
     // initialize propertySet
@@ -328,8 +312,8 @@ public class MonopolyDealGameState extends AbstractGameState {
         }
     }
     public boolean checkForActionCards(int playerID) {
-        for(int i=0;i<playerHands[playerID].getSize();i++){
-            if(checkActionCard(playerID,playerHands[playerID].get(i).cardType())) return true;
+        for(int i=0;i<playerHands.get(playerID).getSize();i++){
+            if(checkActionCard(playerID,playerHands.get(playerID).get(i).cardType())) return true;
         }
         return false;
     }
@@ -343,19 +327,19 @@ public class MonopolyDealGameState extends AbstractGameState {
     public int getActionsLeft(){return actionsLeft;}
     // remove property
     public Deck<MonopolyDealCard> getPlayerHand(int playerID){
-        return playerHands[playerID];
+        return playerHands.get(playerID);
     }
     public void removeCardFromHand(int playerID, CardType cardType){
         MonopolyDealCard card = new MonopolyDealCard(cardType);
-        playerHands[playerID].remove(card);
+        playerHands.get(playerID).remove(card);
     }
     public PropertySet[] getPropertySets(int playerID) {
         return playerPropertySets[playerID];
     }
-    public Deck<MonopolyDealCard> getPlayerBank(int playerId) { return playerBanks[playerId]; }
+    public Deck<MonopolyDealCard> getPlayerBank(int playerId) { return playerBanks.get(playerId); }
     public Deck<MonopolyDealCard> getDiscardPile() { return discardPile; }
     public Deck<MonopolyDealCard> getDrawPile(){ return drawPile; }
-    public boolean CheckForJustSayNo(int playerID) { return playerHands[playerID].getComponents().contains(MonopolyDealCard.create(CardType.JustSayNo)); }
+    public boolean CheckForJustSayNo(int playerID) { return playerHands.get(playerID).getComponents().contains(MonopolyDealCard.create(CardType.JustSayNo)); }
 
     public int getBankValue(int playerID){
         Deck<MonopolyDealCard> playerBank = getPlayerBank(playerID);
@@ -400,24 +384,19 @@ public class MonopolyDealGameState extends AbstractGameState {
                 count++;
             }
         }
-        return count/(params.SETS_TO_WIN*1.0);
+        return count/(((MonopolyDealParameters)gameParameters).SETS_TO_WIN*1.0);
     }
+
     @Override
     public boolean _equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        MonopolyDealGameState state = (MonopolyDealGameState) o;
-        return actionsLeft == state.actionsLeft && boardModificationsLeft == state.boardModificationsLeft && deckEmpty == state.deckEmpty && Arrays.equals(playerHands, state.playerHands) && Arrays.equals(playerBanks, state.playerBanks) && Arrays.deepEquals(playerPropertySets, state.playerPropertySets) && Objects.equals(drawPile, state.drawPile) && Objects.equals(discardPile, state.discardPile);
+        MonopolyDealGameState that = (MonopolyDealGameState) o;
+        return actionsLeft == that.actionsLeft && boardModificationsLeft == that.boardModificationsLeft && deckEmpty == that.deckEmpty && Objects.equals(playerHands, that.playerHands) && Objects.equals(playerBanks, that.playerBanks) && Objects.deepEquals(playerPropertySets, that.playerPropertySets) && Objects.equals(drawPile, that.drawPile) && Objects.equals(discardPile, that.discardPile);
     }
+
     @Override
     public int hashCode() {
-        int result = Objects.hash(super.hashCode(), drawPile, discardPile, actionsLeft, boardModificationsLeft, deckEmpty);
-        result = 31 * result + Arrays.hashCode(playerHands);
-        result = 31 * result + Arrays.hashCode(playerBanks);
-        for(int i=0;i<getNPlayers();i++)
-            result = 31 * result + Arrays.hashCode(playerPropertySets[i]);
-        return result;
+        return Objects.hash(super.hashCode(), playerHands, playerBanks, Arrays.deepHashCode(playerPropertySets), drawPile, discardPile, actionsLeft, boardModificationsLeft, deckEmpty);
     }
 
     public enum MonopolyDealGamePhase implements IGamePhase {

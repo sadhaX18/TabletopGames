@@ -50,6 +50,7 @@ public class MonopolyDealParameters extends TunableParameters {
     public int MULTICOLORRENT_COUNT;
     public int PROPERTYRENT_COUNT;
     Map<CardType, Integer> cardsIncludedInGame = new HashMap<>();
+
     public MonopolyDealParameters() {
         addTunableParameter("HAND_SIZE", 7, Arrays.asList(3,5,7,10));
         addTunableParameter("INITIAL_DEAL", 5, Arrays.asList(3,5));
@@ -191,16 +192,14 @@ public class MonopolyDealParameters extends TunableParameters {
 
     @Override
     public boolean _equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         MonopolyDealParameters that = (MonopolyDealParameters) o;
-        return intensity == that.intensity && HAND_SIZE == that.HAND_SIZE && DRAWS_WHEN_EMPTY == that.DRAWS_WHEN_EMPTY && BOARD_MODIFICATIONS_PER_TURN == that.BOARD_MODIFICATIONS_PER_TURN && INITIAL_DEAL == that.INITIAL_DEAL && ACTIONS_PER_TURN == that.ACTIONS_PER_TURN && DRAWS_PER_TURN == that.DRAWS_PER_TURN && SETS_TO_WIN == that.SETS_TO_WIN && PASSGO_COUNT == that.PASSGO_COUNT && SLYDEAL_COUNT == that.SLYDEAL_COUNT && FORCEDDEAL_COUNT == that.FORCEDDEAL_COUNT && DEBTCOLLECTOR_COUNT == that.DEBTCOLLECTOR_COUNT && ITSMYBIRTHDAY_COUNT == that.ITSMYBIRTHDAY_COUNT && DEALBREAKER_COUNT == that.DEALBREAKER_COUNT && JUSTSAYNO_COUNT == that.JUSTSAYNO_COUNT && MULTICOLORRENT_COUNT == that.MULTICOLORRENT_COUNT && PROPERTYRENT_COUNT == that.PROPERTYRENT_COUNT && Objects.equals(dataPath, that.dataPath) && focusType == that.focusType && Objects.equals(cardsIncludedInGame, that.cardsIncludedInGame);
+        return intensity == that.intensity && HAND_SIZE == that.HAND_SIZE && DRAWS_WHEN_EMPTY == that.DRAWS_WHEN_EMPTY && BOARD_MODIFICATIONS_PER_TURN == that.BOARD_MODIFICATIONS_PER_TURN && INITIAL_DEAL == that.INITIAL_DEAL && ACTIONS_PER_TURN == that.ACTIONS_PER_TURN && DRAWS_PER_TURN == that.DRAWS_PER_TURN && SETS_TO_WIN == that.SETS_TO_WIN && PASSGO_COUNT == that.PASSGO_COUNT && SLYDEAL_COUNT == that.SLYDEAL_COUNT && FORCEDDEAL_COUNT == that.FORCEDDEAL_COUNT && DEBTCOLLECTOR_COUNT == that.DEBTCOLLECTOR_COUNT && ITSMYBIRTHDAY_COUNT == that.ITSMYBIRTHDAY_COUNT && DEALBREAKER_COUNT == that.DEALBREAKER_COUNT && JUSTSAYNO_COUNT == that.JUSTSAYNO_COUNT && MULTICOLORRENT_COUNT == that.MULTICOLORRENT_COUNT && PROPERTYRENT_COUNT == that.PROPERTYRENT_COUNT && Objects.equals(dataPath, that.dataPath) && focusType == that.focusType && Objects.equals(possibleFocusActionCards, that.possibleFocusActionCards) && Objects.equals(cardsIncludedInGame, that.cardsIncludedInGame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), dataPath, focusType, intensity, HAND_SIZE, DRAWS_WHEN_EMPTY, BOARD_MODIFICATIONS_PER_TURN, INITIAL_DEAL, ACTIONS_PER_TURN, DRAWS_PER_TURN, SETS_TO_WIN, PASSGO_COUNT, SLYDEAL_COUNT, FORCEDDEAL_COUNT, DEBTCOLLECTOR_COUNT, ITSMYBIRTHDAY_COUNT, DEALBREAKER_COUNT, JUSTSAYNO_COUNT, MULTICOLORRENT_COUNT, PROPERTYRENT_COUNT, cardsIncludedInGame);
+        return Objects.hash(super.hashCode(), dataPath, focusType, intensity, possibleFocusActionCards, HAND_SIZE, DRAWS_WHEN_EMPTY, BOARD_MODIFICATIONS_PER_TURN, INITIAL_DEAL, ACTIONS_PER_TURN, DRAWS_PER_TURN, SETS_TO_WIN, PASSGO_COUNT, SLYDEAL_COUNT, FORCEDDEAL_COUNT, DEBTCOLLECTOR_COUNT, ITSMYBIRTHDAY_COUNT, DEALBREAKER_COUNT, JUSTSAYNO_COUNT, MULTICOLORRENT_COUNT, PROPERTYRENT_COUNT, cardsIncludedInGame);
     }
 
     @Override
