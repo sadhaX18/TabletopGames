@@ -4,7 +4,7 @@ We run 2-player games with 1 action card only, but 10 copies of each. Repeated f
 
 Identical players play:
 - Best player: MCTS
-- Best heuristic:
+- Best heuristic: property-only
 
 Action cards:
 - Pass Go
